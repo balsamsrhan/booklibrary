@@ -1,9 +1,9 @@
 import 'package:booklibrary/models/Helpers.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import '../Firebase/fb_cotroller_auth.dart';
 import '../widgtes/app_button.dart';
 import '../widgtes/app_text_field.dart';
@@ -18,6 +18,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> with Helpers{
   late TextEditingController _emailController;
   late TextEditingController _passwordController;
+  FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   @override
   void initState() {
@@ -39,6 +40,20 @@ class _LoginScreenState extends State<LoginScreen> with Helpers{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+     backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(
+            color: Colors.black,
+            Icons.arrow_back_ios,
+          ),
+        ),
+      ),
       body: SafeArea(
         child: ListView(
           padding: EdgeInsets.symmetric(horizontal: 16.w),
@@ -71,19 +86,7 @@ class _LoginScreenState extends State<LoginScreen> with Helpers{
               child: SvgPicture.asset('images/email.svg'),
             ),
           keyboardType: TextInputType.emailAddress,
-            // only accept letters from a to z
-            //FilteringTextInputFormatter(RegExp(r'[a-zA-Z]'), allow: true)
         ),
-            // AppTextField(
-            //   prefixIcon: Padding(
-            //     padding: const EdgeInsets.all(10),
-            //     child: SvgPicture.asset('images/email.svg'),
-            //   ),
-            //
-            //   textEditingController: _emailController,
-            //   hintText: 'أدخل عنوان البريد الالكتروني',
-            //   keyboardType: TextInputType.emailAddress,
-            // ),
             SizedBox(height: 20.h),
             AppTextField(
               prefixIcon: Padding(
@@ -129,7 +132,10 @@ class _LoginScreenState extends State<LoginScreen> with Helpers{
               children: [
                 SvgPicture.asset('images/google.svg'),
                 SizedBox(width: 10.w),
-                Text(
+                TextButton(
+                  onPressed: ()  {
+                },
+                  child:Text(
                   'قم بتسجيل الدخول باستخدام جوجل',
                   textAlign: TextAlign.center,
                   style: GoogleFonts.poppins(
@@ -138,6 +144,7 @@ class _LoginScreenState extends State<LoginScreen> with Helpers{
                     color: Colors.black,
                   ),
                 ),
+                )
               ],
             ),
             SizedBox(height: 25.h),
@@ -158,31 +165,31 @@ class _LoginScreenState extends State<LoginScreen> with Helpers{
               ],
             ),
             SizedBox(height: 40.h),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.center,
-            //   children: [
-            //     Text(
-            //       'ليس لديك حساب؟',
-            //       style: GoogleFonts.poppins(
-            //         fontSize: 15.sp,
-            //         fontWeight: FontWeight.w500,
-            //         color: Colors.black,
-            //       ),
-            //     ),
-            //     TextButton(
-            //       onPressed: () {
-            //         Navigator.pushReplacementNamed(context, '/register_screen');
-            //       },
-            //       child: Text(
-            //         'إشتراك',
-            //         style: GoogleFonts.poppins(
-            //           fontSize: 15.sp,
-            //           fontWeight: FontWeight.w500,
-            //         ),
-            //       ),
-            //     ),
-            //   ],
-            // ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'ليس لديك حساب؟',
+                  style: GoogleFonts.poppins(
+                    fontSize: 15.sp,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black,
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pushReplacementNamed(context, '/register_screen');
+                  },
+                  child: Text(
+                    'إشتراك',
+                    style: GoogleFonts.poppins(
+                      fontSize: 15.sp,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),
@@ -204,7 +211,7 @@ class _LoginScreenState extends State<LoginScreen> with Helpers{
   }
 
   _login() async {
-    bool response = await FBAuthController().login(context:context,email: _emailController.text,
+    bool response = await FBAuthController().login(id:_firebaseAuth.currentUser!.uid,context:context,email: _emailController.text,
         password: _passwordController.text);
     if(response){
       Navigator.pushReplacementNamed(context, '/bn_screen');

@@ -57,17 +57,17 @@ class AppTextField extends StatelessWidget {
           color: Colors.black,
         ),
         helperStyle: GoogleFonts.poppins(fontSize: 15.sp),
-        focusedBorder: OutlineInputBorder(
+        border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(50.r),
-          borderSide: BorderSide(color: borderColor, width: 1.0.w),
+          borderSide: BorderSide(color: Colors.black, width: 1.0.w),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(50.r),
-          borderSide: BorderSide(color: borderColor, width: 1.0.w),
+          borderSide: BorderSide(color:  Colors.black, width: 1.0.w),
         ),
         disabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(50.r),
-          borderSide: BorderSide(color: borderColor, width: 1.0.w),
+          borderSide: BorderSide(color:  Colors.black, width: 1.0.w),
         ),
       ),
     );

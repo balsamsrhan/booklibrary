@@ -29,9 +29,9 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-           Image.asset('images/splash.png'),
+           Image.asset('images/splach.png'),
             Text(
-          'مكتبتي',
+          'مكتبة نون',
               style: GoogleFonts.poppins(
                 fontSize: 30.sp,
                 fontWeight: FontWeight.w600,

@@ -1,6 +1,8 @@
+/*
 import 'package:booklibrary/auth/login_screen.dart';
 import 'package:booklibrary/auth/register_screen.dart';
 import 'package:booklibrary/widgtes/app_button.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -47,72 +49,108 @@ class _TabBarPageState extends State<TabBarPage>
       ),
       backgroundColor: Colors.white,
       body: Container(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 10),
-          child: Container(
-            height: MediaQuery.of(context).size.height,
-            child: Column(
-              children: [
-                SizedBox(height: 20),
-                Container(
-                  // height: 50,
-                  width: MediaQuery.of(context).size.height,
-                  decoration: BoxDecoration(
-                      color: HexColor("C19A6B"),
-                      borderRadius: BorderRadius.circular(8)),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.all(5),
-                        child: TabBar(
-                          unselectedLabelColor: Colors.white,
-                          labelColor: Colors.black,
-                          indicatorColor: Colors.white,
-                          indicatorWeight: 2,
-                          indicator: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          controller: tabController,
-                          tabs: [
-                            Tab(
-                              text: 'تسجيل دخول',
-                            ),
-                            Tab(
-                              text: 'اشتراك',
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: TabBarView(
-                    controller: tabController,
-                    children: [
-                      LoginScreen(),
-                      RegisterScreen(),
-                    ],
-                  ),
-                )
-              ],
+        height: 60,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(18),
+        ),
+
+        child: Column(
+
+          children: [
+            const Spacer(),
+            SizedBox(width: 20.w),
+            Expanded(
+              flex: 2,
+              child: AppButton(
+                onPress: () {
+                  Navigator.pushReplacementNamed(context, '/login_screen');
+                },
+                text: 'تسجيل الدخول',
+              ),
             ),
-          ),
+            SizedBox(width: 20.w),
+            Expanded(
+              flex: 2,
+              child: AppButton(
+                onPress: () {
+                  Navigator.pushReplacementNamed(context, '/register_screen');
+                },
+                text: 'اشتراك',
+                textColor: Colors.black,
+                buttonColor: Colors.white,
+              ),
+            ),
+            const Spacer(),
+          ],
         ),
       ),
+      // Container(
+      //   child: Padding(
+      //     padding: EdgeInsets.symmetric(horizontal: 10),
+      //     child: Container(
+      //       height: MediaQuery.of(context).size.height,
+      //       child: Column(
+      //         children: [
+      //           SizedBox(height: 20),
+      //           Container(
+      //             // height: 50,
+      //             width: MediaQuery.of(context).size.height,
+      //             decoration: BoxDecoration(
+      //                 color: HexColor("C19A6B"),
+      //                 borderRadius: BorderRadius.circular(8)),
+      //             child: Column(
+      //               children: [
+      //                 Padding(
+      //                   padding: EdgeInsets.all(5),
+      //                   child: TabBar(
+      //                     unselectedLabelColor: Colors.white,
+      //                     labelColor: Colors.black,
+      //                     indicatorColor: Colors.white,
+      //                     indicatorWeight: 2,
+      //                     indicator: BoxDecoration(
+      //                       color: Colors.white,
+      //                       borderRadius: BorderRadius.circular(5),
+      //                     ),
+      //                     controller: tabController,
+      //                     tabs: [
+      //                       Tab(
+      //                         text: 'تسجيل دخول',
+      //                       ),
+      //                       Tab(
+      //                         text: 'اشتراك',
+      //                       ),
+      //                     ],
+      //                   ),
+      //                 ),
+      //               ],
+      //             ),
+      //           ),
+      //           Expanded(
+      //             child: TabBarView(
+      //               controller: tabController,
+      //               children: [
+      //                 LoginScreen(),
+      //                 RegisterScreen(),
+      //               ],
+      //             ),
+      //           )
+      //         ],
+      //       ),
+      //     ),
+      //   ),
+      // ),
     );
   }
-}
+}*/
 
-class HexColor extends Color {
-  static int _getColor(String hex) {
-    String formattedHex =  "FF" + hex.toUpperCase().replaceAll("#", "");
-    return int.parse(formattedHex, radix: 16);
-  }
-  HexColor(final String hex) : super(_getColor(hex));
-}
-/*
+// class HexColor extends Color {
+//   static int _getColor(String hex) {
+//     String formattedHex =  "FF" + hex.toUpperCase().replaceAll("#", "");
+//     return int.parse(formattedHex, radix: 16);
+//   }
+//   HexColor(final String hex) : super(_getColor(hex));
+// }
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -183,4 +221,3 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     );
   }
 }
-*/

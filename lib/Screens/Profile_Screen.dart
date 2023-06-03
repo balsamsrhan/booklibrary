@@ -75,7 +75,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                     ),
                     const Spacer(),
-                    const Icon(Icons.arrow_forward_ios),
+                    const Icon(Icons.arrow_forward_ios,
+                    ),
                   ],
                 ),
               ),
@@ -91,6 +92,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       width: 24.w,
                     ),
                     SizedBox(width: 8.w),
+                    TextButton(onPressed: (){
+
+                    }, child:
                     Text(
                       'اعادة كلمة المرور',
                       style: GoogleFonts.poppins(
@@ -98,6 +102,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         fontWeight: FontWeight.w500,
                         color: Colors.black,
                       ),
+                    ),
                     ),
                     const Spacer(),
                     const Icon(Icons.arrow_forward_ios),
@@ -135,13 +140,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: Row(
                   children: [
                     Image.asset(
-                      'images/order.png',
+                      'images/book.png',
                       height: 24.h,
                       width: 24.w,
                     ),
                     SizedBox(width: 8.w),
                     Text(
-                      'الطلبات ',
+                      'كتبي ',
                       style: GoogleFonts.poppins(
                         fontSize: 16.sp,
                         fontWeight: FontWeight.w500,

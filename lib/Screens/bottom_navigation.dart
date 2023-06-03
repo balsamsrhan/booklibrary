@@ -1,14 +1,9 @@
-/*
-import 'package:booklibrary/Screens/Home_screen.dart';
 import 'package:booklibrary/Screens/addBook.dart';
-import 'package:booklibrary/Screens/hom.dart';
-import 'package:booklibrary/Screens/image.dart';
 import 'package:flashy_tab_bar2/flashy_tab_bar2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'dart:ui';
 import '../models/bn_screen.dart';
+import 'ItemListBook.dart';
 import 'Profile_Screen.dart';
 import 'home_page.dart';
 class BottomNavigationScreen extends StatefulWidget {
@@ -39,7 +34,7 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
   Widget build(BuildContext context) {
     final List<BnScreen> screens = <BnScreen>[
       const BnScreen(title: 'الرئيسية', widget: HomePage()),
-      const BnScreen(title: 'الكتب المستعملة', widget: MyHomePage()),
+      const BnScreen(title: 'الكتب المستعملة', widget: ItemList()),
       const BnScreen(title: 'الطلبات', widget: AddItem()),
       const BnScreen(title: 'حسابك', widget: ProfileScreen()),
     ];
@@ -141,4 +136,3 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
     );
   }
 }
-*/

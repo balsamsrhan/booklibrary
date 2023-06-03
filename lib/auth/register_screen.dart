@@ -1,11 +1,12 @@
 import 'package:booklibrary/models/User.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../Firebase/fb_firebase.dart';
 import '../models/Helpers.dart';
 import '../Firebase/fb_cotroller_auth.dart';
 import '../widgtes/app_button.dart';
@@ -19,6 +20,8 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> with Helpers{
+
+  FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   late TextEditingController _nameController;
   late TextEditingController _emailController;
   late TextEditingController _passwordController;
@@ -48,6 +51,20 @@ class _RegisterScreenState extends State<RegisterScreen> with Helpers{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(
+            color: Colors.black,
+            Icons.arrow_back_ios,
+          ),
+        ),
+      ),
       body: SafeArea(
         child: ListView(
           padding: EdgeInsets.symmetric(horizontal: 16.w),
@@ -89,7 +106,6 @@ class _RegisterScreenState extends State<RegisterScreen> with Helpers{
               ),
               textEditingController: _emailController,
              hintText: 'أدخل عنوان البريد الالكتروني',
-
               keyboardType: TextInputType.emailAddress,
             ),
             SizedBox(height: 20.h),
@@ -133,8 +149,8 @@ class _RegisterScreenState extends State<RegisterScreen> with Helpers{
                 },
                 icon: Icon(
                   obscure2
-                      ? Icons.visibility_outlined
-                      : Icons.visibility_off_outlined,
+                      ? Icons.visibility_off_outlined
+                      : Icons.visibility_outlined,
                 ),
               ),
             ),
@@ -167,33 +183,33 @@ class _RegisterScreenState extends State<RegisterScreen> with Helpers{
               ],
             ),
             SizedBox(height: 40.h),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.center,
-            //   children: [
-            //     Text(
-            //       'لديك حساب؟',
-            //       style: GoogleFonts.poppins(
-            //         fontSize: 15.sp,
-            //         fontWeight: FontWeight.w500,
-            //         color: Colors.black,
-            //       ),
-            //     ),
-            //     SizedBox(height: 30.h,),
-            //     TextButton(
-            //       onPressed: () {
-            //         Navigator.pushReplacementNamed(context, '/login_screen');
-            //       },
-            //       child: Text(
-            //         'سجل الدخول',
-            //         style: GoogleFonts.poppins(
-            //           fontSize: 15.sp,
-            //           fontWeight: FontWeight.w500,
-            //         ),
-            //       ),
-            //
-            //     ),
-            //   ],
-            // ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'لديك حساب؟',
+                  style: GoogleFonts.poppins(
+                    fontSize: 15.sp,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black,
+                  ),
+                ),
+                SizedBox(height: 30.h,),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pushReplacementNamed(context, '/login_screen');
+                  },
+                  child: Text(
+                    'سجل الدخول',
+                    style: GoogleFonts.poppins(
+                      fontSize: 15.sp,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+
+                ),
+              ],
+            ),
           ],
         ),
       ),
@@ -221,11 +237,12 @@ class _RegisterScreenState extends State<RegisterScreen> with Helpers{
     if(response){
       Navigator.pushReplacementNamed(context, '/login_screen');
       Map<String,String> dataSave = {
+        'id' : _firebaseAuth.currentUser!.uid,
         'name' : _nameController.text,
         'email' : _emailController.text,
         'password' : _passwordController.text,
       };
-      FirebaseFirestore.instance.collection("Users").add(dataSave);
+      FirebaseDatabase.instance.ref().child('Users').set(dataSave);
     }else {
       showSnackBar(
           context,

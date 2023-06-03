@@ -1,15 +1,26 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 
 import 'addBook.dart';
 
-class ItemList extends StatelessWidget {
-  ItemList({Key? key}) : super(key: key) {
-    _stream = _reference.snapshots();
-  }
+class ItemList extends StatefulWidget {
+  const ItemList({Key? key}) : super(key: key);
+   // _stream = _reference.snapshots();
 
-  CollectionReference _reference =
-  FirebaseFirestore.instance.collection('book_user');
+ @override
+ _ItemListState createState() => _ItemListState();
+}
+
+class _ItemListState extends State<ItemList> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+  // CollectionReference _reference =
+  // FirebaseFirestore.instance.collection('book_user');
 
   //_reference.get()  ---> returns Future<QuerySnapshot>
   //_reference.snapshots()--> Stream<QuerySnapshot> -- realtime updates
@@ -17,7 +28,99 @@ class ItemList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    DatabaseReference db_Ref =
+    FirebaseDatabase.instance.ref().child('book_user');
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.brown[400],
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => AddItem(),
+            ),
+          );
+        },
+        child: Icon(
+          Icons.add,
+        ),
+      ),
+      // appBar: AppBar(
+      //   title: Text(
+      //     'Contacts',
+      //     style: TextStyle(
+      //       fontSize: 30,
+      //     ),
+      //   ),
+      //   backgroundColor: Colors.indigo[900],
+      // ),
+      body: FirebaseAnimatedList(
+        query: db_Ref,
+        shrinkWrap: true,
+        itemBuilder: (context, snapshot, animation, index) {
+          Map Contact = snapshot.value as Map;
+          Contact['key'] = snapshot.key;
+          return GestureDetector(
+            onTap: () {
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (_) => UpdateRecord(
+              //       Contact_Key: Contact['key'],
+              //     ),
+              //   ),
+              // );
+              // print(Contact['key']);
+            },
+            child: Container(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ListTile(
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(
+                      color: Colors.white,
+                    ),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  tileColor: Colors.grey[300],
+                  trailing: IconButton(
+                    icon: Icon(
+                      Icons.delete,
+                      color: Colors.red[900],
+                    ),
+                    onPressed: () {
+                      db_Ref.child(Contact['key']).remove();
+                    },
+                  ),
+                  leading: CircleAvatar(
+                    backgroundImage: NetworkImage(
+                      Contact['url'],
+                    ),
+                  ),
+                  title: Text(
+                    Contact['name'],
+                    style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  subtitle: Text(
+                    Contact['auther'],
+                    style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+  }
+    /*return Scaffold(
       appBar: AppBar(
         title: Text('Items'),
       ),
@@ -78,7 +181,7 @@ class ItemList extends StatelessWidget {
     );
   }
 }
-/*
+*//*
 import 'package:booklibrary/Screens/addBook.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -158,4 +261,5 @@ class ItemList extends StatelessWidget {
       ),
     );
   }
-}*/
+}*//*
+*/
