@@ -1,4 +1,4 @@
-import 'package:booklibrary/Screens/addBook.dart';
+import 'package:booklibrary/Screens/order_screen.dart';
 import 'package:flashy_tab_bar2/flashy_tab_bar2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -33,9 +33,9 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
   @override
   Widget build(BuildContext context) {
     final List<BnScreen> screens = <BnScreen>[
-      const BnScreen(title: 'الرئيسية', widget: HomePage()),
+      const BnScreen(title: 'الرئيسية', widget: HomeScreen()),
       const BnScreen(title: 'الكتب المستعملة', widget: ItemList()),
-      const BnScreen(title: 'الطلبات', widget: AddItem()),
+      const BnScreen(title: 'الطلبات', widget: FavoritesScreen()),
       const BnScreen(title: 'حسابك', widget: ProfileScreen()),
     ];
     return Scaffold(

@@ -19,12 +19,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   int _currentPage = 0;
-  List colors = const [
-    Color(0xffDAD3C8),
-    Color(0xffefdfcf),
-    Color(0xfff1e7d7),
-  ];
-
   AnimatedContainer _buildDots({
     int? index,
   }) {
@@ -50,7 +44,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     double height = SizeConfig.screenH!;
 
     return Scaffold(
-      backgroundColor: colors[_currentPage],
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: Column(
           children: [
@@ -117,7 +111,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     padding: const EdgeInsets.all(30),
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.pushReplacementNamed(context, '/welcome_screen');
+                        Navigator.pushReplacementNamed(context, '/welcom_screen');
                       },
                       child: const Text("ابدأ"),
                       style: ElevatedButton.styleFrom(

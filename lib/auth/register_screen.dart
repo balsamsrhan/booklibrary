@@ -20,7 +20,7 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> with Helpers{
-
+  DatabaseReference? dbRef;
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   late TextEditingController _nameController;
   late TextEditingController _emailController;
@@ -34,6 +34,7 @@ class _RegisterScreenState extends State<RegisterScreen> with Helpers{
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
     _confirmPasswordController = TextEditingController();
+    dbRef = FirebaseDatabase.instance.ref().child('Users');
   }
 
   @override
@@ -242,7 +243,7 @@ class _RegisterScreenState extends State<RegisterScreen> with Helpers{
         'email' : _emailController.text,
         'password' : _passwordController.text,
       };
-      FirebaseDatabase.instance.ref().child('Users').set(dataSave);
+      dbRef!.push().set(dataSave);
     }else {
       showSnackBar(
           context,

@@ -1,7 +1,11 @@
+import 'package:booklibrary/Screens/UpdateProfile.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../auth/login_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -13,7 +17,8 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
-    return ListView(
+    return Scaffold(
+       body : ListView(
       children: [
         SizedBox(height: 20.h),
         Padding(
@@ -67,7 +72,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     SizedBox(width: 8.w),
                     Text(
-                      'تغيير الاسم',
+                      'تحديث بياناتي  ',
                       style: GoogleFonts.poppins(
                         fontSize: 16.sp,
                         fontWeight: FontWeight.w500,
@@ -75,8 +80,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                     ),
                     const Spacer(),
-                    const Icon(Icons.arrow_forward_ios,
-                    ),
+                    IconButton(onPressed: (){
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context){
+                        return const UpdateProfileScreen(studentKey: 'id',);
+                      }));
+
+                    }, icon: const Icon(Icons.arrow_forward_ios)),
+
                   ],
                 ),
               ),
@@ -160,7 +170,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               SizedBox(height: 20.h),
               InkWell(
-                onTap: () {},
+                onTap: () {
+                },
                 child: Row(
                   children: [
                     Image.asset(
@@ -178,7 +189,34 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                     ),
                     const Spacer(),
-                    const Icon(Icons.arrow_forward_ios),
+                     IconButton(onPressed: (){showDialog(context: context, builder: (ctx){
+    return AlertDialog(
+    title: Text('تنبيه !'),
+    content: Text('هل انت متأكد من انك تريد تسجيل خروج ؟'),
+    actions: [
+
+    TextButton(onPressed: (){
+
+    Navigator.of(ctx).pop();
+
+    }, child: Text('لا'),),
+
+
+    TextButton(onPressed: (){
+    Navigator.of(ctx).pop();
+
+    FirebaseAuth.instance.signOut();
+
+    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context){
+    return  LoginScreen();
+    }));
+
+    }, child: Text('نعم'),),
+
+    ],
+    );
+    });
+                    }, icon: const Icon(Icons.arrow_forward_ios)),
                   ],
                 ),
               ),
@@ -186,6 +224,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ),
       ],
+    ),
     );
   }
 }

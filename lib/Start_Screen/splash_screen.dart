@@ -1,3 +1,4 @@
+import 'package:booklibrary/models/SplachService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -10,12 +11,14 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  splachservice spservice = splachservice();
   @override
   void initState() {
     super.initState();
     Future.delayed(const Duration(seconds: 5), () {
       Navigator.pushReplacementNamed(context, '/onboarding_screen');
     });
+spservice.islogn(context);
   }
 
   @override

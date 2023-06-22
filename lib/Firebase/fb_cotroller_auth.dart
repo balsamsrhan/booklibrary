@@ -17,7 +17,7 @@ class FBAuthController with Helpers{
     });
   }
 
-  Future<bool> login({id,context ,email, password}) async {
+  Future<bool> login({context ,email, password}) async {
     return await _firebaseAuth
         .signInWithEmailAndPassword(email: email, password: password)
         .then((value){

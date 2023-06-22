@@ -211,10 +211,10 @@ class _LoginScreenState extends State<LoginScreen> with Helpers{
   }
 
   _login() async {
-    bool response = await FBAuthController().login(id:_firebaseAuth.currentUser!.uid,context:context,email: _emailController.text,
+    bool response = await FBAuthController().login(context:context,email: _emailController.text,
         password: _passwordController.text);
     if(response){
-      Navigator.pushReplacementNamed(context, '/bn_screen');
+      Navigator.pushReplacementNamed(context,'/bn_screen');
     }else {
       showSnackBar(
           context,

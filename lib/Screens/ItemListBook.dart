@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 
+import '../models/add_book_user.dart';
 import 'addBook.dart';
 
 class ItemList extends StatefulWidget {
@@ -14,6 +16,8 @@ class ItemList extends StatefulWidget {
 }
 
 class _ItemListState extends State<ItemList> {
+  late Book b;
+  FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   @override
   void initState() {
     // TODO: implement initState
@@ -31,6 +35,7 @@ class _ItemListState extends State<ItemList> {
     DatabaseReference db_Ref =
     FirebaseDatabase.instance.ref().child('book_user');
     return Scaffold(
+
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.brown[400],
         onPressed: () {
@@ -54,6 +59,7 @@ class _ItemListState extends State<ItemList> {
       //   ),
       //   backgroundColor: Colors.indigo[900],
       // ),
+
       body: FirebaseAnimatedList(
         query: db_Ref,
         shrinkWrap: true,
@@ -72,6 +78,7 @@ class _ItemListState extends State<ItemList> {
               // );
               // print(Contact['key']);
             },
+
             child: Container(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -83,15 +90,15 @@ class _ItemListState extends State<ItemList> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   tileColor: Colors.grey[300],
-                  trailing: IconButton(
-                    icon: Icon(
-                      Icons.delete,
-                      color: Colors.red[900],
-                    ),
-                    onPressed: () {
-                      db_Ref.child(Contact['key']).remove();
-                    },
-                  ),
+                  // trailing: IconButton(
+                  //   icon: Icon(
+                  //     Icons.delete,
+                  //     color: Colors.red[900],
+                  //   ),
+                  //   onPressed: () {
+                  //     db_Ref.child(Contact['key']).remove();
+                  //   },
+                  // ),
                   leading: CircleAvatar(
                     backgroundImage: NetworkImage(
                       Contact['url'],
@@ -116,7 +123,9 @@ class _ItemListState extends State<ItemList> {
             ),
           );
         },
+
       ),
+
     );
   }
   }
