@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../Firebase/fb_cotroller_auth.dart';
 import '../widgtes/app_button.dart';
 import '../widgtes/app_text_field.dart';
@@ -21,10 +22,13 @@ class _LoginScreenState extends State<LoginScreen> with Helpers{
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   @override
-  void initState() {
+  Future<void> initState() async {
     super.initState();
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
+    // Obtain shared preferences.
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('user_id', _firebaseAuth.currentUser!.uid);
   }
 
   @override

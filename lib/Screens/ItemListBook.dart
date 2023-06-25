@@ -1,9 +1,10 @@
+import 'package:booklibrary/Screens/update.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import '../models/add_book_user.dart';
 import 'addBook.dart';
 
@@ -18,10 +19,13 @@ class ItemList extends StatefulWidget {
 class _ItemListState extends State<ItemList> {
   late Book b;
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  late String action;
   @override
-  void initState() {
+  Future<void> initState() async {
     // TODO: implement initState
     super.initState();
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+     action = prefs.getString('user_id')!;
   }
   // CollectionReference _reference =
   // FirebaseFirestore.instance.collection('book_user');
@@ -33,7 +37,11 @@ class _ItemListState extends State<ItemList> {
   @override
   Widget build(BuildContext context) {
     DatabaseReference db_Ref =
-    FirebaseDatabase.instance.ref().child('book_user');
+    FirebaseDatabase.instance.ref().child('Book_user');
+    print(db_Ref);
+    // if(action  == ){
+    //
+    // }
     return Scaffold(
 
       floatingActionButton: FloatingActionButton(
@@ -68,15 +76,15 @@ class _ItemListState extends State<ItemList> {
           Contact['key'] = snapshot.key;
           return GestureDetector(
             onTap: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (_) => UpdateRecord(
-              //       Contact_Key: Contact['key'],
-              //     ),
-              //   ),
-              // );
-              // print(Contact['key']);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => UpdateRecord(
+                    Contact_Key: Contact['key'],
+                  ),
+                ),
+              );
+              print(Contact['key']);
             },
 
             child: Container(

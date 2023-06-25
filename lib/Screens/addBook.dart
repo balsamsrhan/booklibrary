@@ -7,6 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import '../auth/firebase_auth_helper.dart';
+import '../models/Helpers.dart';
+import '../models/add_book_user.dart';
 import 'ItemListBook.dart';
 
 class AddItem extends StatefulWidget {
@@ -16,19 +19,19 @@ class AddItem extends StatefulWidget {
   State<AddItem> createState() => _AddItemState();
 }
 
-class _AddItemState extends State<AddItem> {
+class _AddItemState extends State<AddItem> with Helpers{
   TextEditingController _controllerName = TextEditingController();
   TextEditingController _controllerdetailes = TextEditingController();
   TextEditingController _controllerauther = TextEditingController();
+  TextEditingController _controllerphone = TextEditingController();
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  DatabaseReference dbRef = FirebaseDatabase.instance.ref().child('Book_user');
   File? file;
   ImagePicker image = ImagePicker();
   var url;
-  DatabaseReference? dbRef;
   @override
   void initState() {
     super.initState();
-    dbRef = FirebaseDatabase.instance.ref().child('book_user');
   }
 
   // GlobalKey<FormState> key = GlobalKey();
@@ -98,6 +101,11 @@ class _AddItemState extends State<AddItem> {
         hintText: 'وصف عن الكتاب',
         keyboardType: TextInputType.text,
       ),
+      AppTextField(
+        textEditingController: _controllerphone,
+        hintText: 'رقم لتواصل',
+        keyboardType: TextInputType.text,
+      ),
       SizedBox(
         height: 30,
       ),
@@ -164,9 +172,11 @@ class _AddItemState extends State<AddItem> {
           );
         });
       }
+
     } on Exception catch (e) {
       print(e);
     }
+
   }
 
 }

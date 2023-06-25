@@ -71,67 +71,67 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
           ),
         ],
       ),
-        // child: BottomNavigationBar(
-        //   onTap: (int selectedPageIndex) {
-        //     setState(() => _selectedPageIndex = selectedPageIndex);
-        //   },
-        //   currentIndex: _selectedPageIndex,
-        //   backgroundColor: const Color(0XFF95959F),
-        //   type: BottomNavigationBarType.fixed,
-        //   showSelectedLabels: false,
-        //   showUnselectedLabels: false,
-        //   selectedItemColor: Colors.white,
-        //   selectedIconTheme: const IconThemeData(
-        //     color: Colors.white,
-        //   ),
-        //   selectedLabelStyle: GoogleFonts.montserrat(
-        //     fontWeight: FontWeight.bold,
-        //     fontSize: 10.sp,
-        //   ),
-        //   selectedFontSize: 10.sp,
-        //   unselectedItemColor: Colors.white,
-        //   unselectedIconTheme: const IconThemeData(
-        //     color: Colors.white,
-        //   ),
-        //   unselectedLabelStyle: GoogleFonts.cairo(
-        //     fontSize: 10.sp,
-        //   ),
-        //   unselectedFontSize: 10.sp,
-        //   iconSize: 24,
-        //   elevation: 20,
-        //   items: const [
-        //     BottomNavigationBarItem(
-        //       activeIcon: Icon(Icons.home),
-        //       icon: Icon(Icons.home_outlined),
-        //       label: '',
-        //     ),
-        //     BottomNavigationBarItem(
-        //       activeIcon: Icon(Icons.shopping_bag),
-        //       icon: Icon(Icons.shopping_bag_outlined),
-        //       label: '',
-        //     ),
-        //     BottomNavigationBarItem(
-        //       activeIcon: Icon(Icons.shopping_cart),
-        //       icon: Icon(Icons.shopping_cart_outlined),
-        //       label: '',
-        //     ),
-        //     // BottomNavigationBarItem(
-        //     //   activeIcon: Icon(Icons.category),
-        //     //   icon: Icon(Icons.category_outlined),
-        //     //   label: '',
-        //     // ),
-        //     // BottomNavigationBarItem(
-        //     //   activeIcon: Icon(Icons.access_time_filled_sharp),
-        //     //   icon: Icon(Icons.access_time_outlined),
-        //     //   label: '',
-        //     // ),
-        //     BottomNavigationBarItem(
-        //       activeIcon: Icon(Icons.person),
-        //       icon: Icon(Icons.person_outline),
-        //       label: '',
-        //     ),
-        //   ],
-        // ),
+      //   child: BottomNavigationBar(
+      //     onTap: (int selectedPageIndex) {
+      //       setState(() => _selectedPageIndex = selectedPageIndex);
+      //     },
+      //     currentIndex: _selectedPageIndex,
+      //     backgroundColor: const Color(0XFF95959F),
+      //     type: BottomNavigationBarType.fixed,
+      //     showSelectedLabels: false,
+      //     showUnselectedLabels: false,
+      //     selectedItemColor: Colors.white,
+      //     selectedIconTheme: const IconThemeData(
+      //       color: Colors.white,
+      //     ),
+      //     selectedLabelStyle: GoogleFonts.montserrat(
+      //       fontWeight: FontWeight.bold,
+      //       fontSize: 10.sp,
+      //     ),
+      //     selectedFontSize: 10.sp,
+      //     unselectedItemColor: Colors.white,
+      //     unselectedIconTheme: const IconThemeData(
+      //       color: Colors.white,
+      //     ),
+      //     unselectedLabelStyle: GoogleFonts.cairo(
+      //       fontSize: 10.sp,
+      //     ),
+      //     unselectedFontSize: 10.sp,
+      //     iconSize: 24,
+      //     elevation: 20,
+      //     items: const [
+      //       BottomNavigationBarItem(
+      //         activeIcon: Icon(Icons.home),
+      //         icon: Icon(Icons.home_outlined),
+      //         label: '',
+      //       ),
+      //       BottomNavigationBarItem(
+      //         activeIcon: Icon(Icons.shopping_bag),
+      //         icon: Icon(Icons.shopping_bag_outlined),
+      //         label: '',
+      //       ),
+      //       BottomNavigationBarItem(
+      //         activeIcon: Icon(Icons.shopping_cart),
+      //         icon: Icon(Icons.shopping_cart_outlined),
+      //         label: '',
+      //       ),
+      //       // BottomNavigationBarItem(
+      //       //   activeIcon: Icon(Icons.category),
+      //       //   icon: Icon(Icons.category_outlined),
+      //       //   label: '',
+      //       // ),
+      //       // BottomNavigationBarItem(
+      //       //   activeIcon: Icon(Icons.access_time_filled_sharp),
+      //       //   icon: Icon(Icons.access_time_outlined),
+      //       //   label: '',
+      //       // ),
+      //       BottomNavigationBarItem(
+      //         activeIcon: Icon(Icons.person),
+      //         icon: Icon(Icons.person_outline),
+      //         label: '',
+      //       ),
+      //     ],
+      //   ),
 
     );
   }

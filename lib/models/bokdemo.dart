@@ -5,9 +5,9 @@ class Bookhome {
    String name;
   final String auther;
   final String description;
-  final double price;
+  final String price;
  final String book_category;
-  final int book_count;
+  final String book_count;
   final String imageUrl;
 
   Bookhome(this.id, this.name, this.auther ,this.imageUrl, this.description, this.price, this.book_category, this.book_count);

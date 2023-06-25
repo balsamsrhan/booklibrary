@@ -32,7 +32,9 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: Text('Bookstore'),
       ),
-      body: _books != null
+
+      body:Container(
+    child: _books != null
           ? GridView.builder(
         padding: EdgeInsets.all(10.0),
         itemCount: _books.length,
@@ -68,6 +70,8 @@ class _HomeScreenState extends State<HomeScreen> {
           : Center(
         child: CircularProgressIndicator(),
       ),
+      )
+
     );
   }
 }

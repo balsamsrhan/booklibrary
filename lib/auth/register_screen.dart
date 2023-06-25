@@ -1,7 +1,4 @@
-import 'package:booklibrary/models/User.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,8 +6,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../models/Helpers.dart';
 import '../Firebase/fb_cotroller_auth.dart';
+import '../models/User.dart';
 import '../widgtes/app_button.dart';
 import '../widgtes/app_text_field.dart';
+import 'firebase_auth_helper.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -178,8 +177,8 @@ class _RegisterScreenState extends State<RegisterScreen> with Helpers{
               children: [
                 SvgPicture.asset('images/google.svg'),
                 SizedBox(width: 10.w),
-                SvgPicture.asset('images/facebook.svg'),
-                SizedBox(width: 10.w),
+               // SvgPicture.asset('images/facebook.svg'),
+             //   SizedBox(width: 10.w),
                 SvgPicture.asset('images/call.svg'),
               ],
             ),

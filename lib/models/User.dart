@@ -1,22 +1,24 @@
-class User {
+
+class Users {
   late String id;
-  late String nameuser;
+  late String name;
   late String email;
-  late String pasword;
+  late String password;
 
-  User();
 
-  User.fromMap(Map<String, dynamic> documentMap) {
-    nameuser = documentMap['nameuser'];
+  Users();
+
+  Users.fromMap(Map<String, dynamic> documentMap) {
+    name = documentMap['name'];
     email = documentMap['email'];
-    pasword = documentMap['password'];
+    password = documentMap['password'];
   }
 
   Map<String, dynamic> toMap() {
     Map<String, dynamic> map = <String, dynamic>{};
-    map['nameuser'] = nameuser;
+    map['name'] = name;
     map['email'] = email;
-    map['password'] = pasword;
+    map['password'] = password;
     return map;
   }
 }
