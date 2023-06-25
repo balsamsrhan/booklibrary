@@ -1,3 +1,4 @@
+import 'package:booklibrary/Screens/MyBookUser.dart';
 import 'package:booklibrary/Screens/UpdateProfile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -164,7 +165,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                     ),
                     const Spacer(),
-                    const Icon(Icons.arrow_forward_ios),
+    IconButton(onPressed: (){
+      Navigator.of(context).push(MaterialPageRoute(builder: (context){
+        return const MyBook();
+      }));
+    }, icon: const Icon(Icons.arrow_forward_ios))
                   ],
                 ),
               ),
