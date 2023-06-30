@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../Firebase/fb_cotroller_auth.dart';
+import '../Screens/phone.dart';
 import '../widgtes/app_button.dart';
 import '../widgtes/app_text_field.dart';
 
@@ -22,13 +23,17 @@ class _LoginScreenState extends State<LoginScreen> with Helpers{
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   @override
-  Future<void> initState() async {
+  initState()  {
     super.initState();
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
-    // Obtain shared preferences.
+    createPrefs();
+  }
+  Future<void> createPrefs() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove('user_id');
     await prefs.setString('user_id', _firebaseAuth.currentUser!.uid);
+    print("login: ${prefs.getString('user_id')}");
   }
 
   @override
@@ -138,6 +143,12 @@ class _LoginScreenState extends State<LoginScreen> with Helpers{
                 SizedBox(width: 10.w),
                 TextButton(
                   onPressed: ()  {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => LoginPage(),
+                      ),
+                    );
                 },
                   child:Text(
                   'قم بتسجيل الدخول باستخدام جوجل',

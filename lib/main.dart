@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
                '/login_screen': (context) =>  LoginScreen(),
                '/home_screen': (context) => AddItem(),
               '/bn_screen': (context) => const BottomNavigationScreen(),
-              '/upload_image_screen': (context) => FavoritesScreen(),
+              '/upload_image_screen': (context) => Cart(),
               // '/book_screen': (context) => const BookScreen(),
             },
           );

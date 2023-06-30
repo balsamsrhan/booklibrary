@@ -1,3 +1,4 @@
+import 'package:booklibrary/Screens/FavouritBook.dart';
 import 'package:booklibrary/Screens/order_screen.dart';
 import 'package:flashy_tab_bar2/flashy_tab_bar2.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +36,8 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
     final List<BnScreen> screens = <BnScreen>[
       const BnScreen(title: 'الرئيسية', widget: HomeScreen()),
       const BnScreen(title: 'الكتب المستعملة', widget: ItemList()),
-      const BnScreen(title: 'الطلبات', widget: FavoritesScreen()),
+      const BnScreen(title: 'الطلبات', widget: Cart()),
+      const BnScreen(title: 'المفضلة', widget: Favourites()),
       const BnScreen(title: 'حسابك', widget: ProfileScreen()),
     ];
     return Scaffold(
@@ -64,6 +66,10 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
           FlashyTabBarItem(
             icon: Icon(Icons.shopping_cart),
             title: Text('الطلبات'),
+          ),
+          FlashyTabBarItem(
+            icon: Icon(Icons.favorite),
+            title: Text('المفضلة'),
           ),
           FlashyTabBarItem(
             icon: Icon(Icons.person),

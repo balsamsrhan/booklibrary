@@ -1,10 +1,6 @@
-import 'package:booklibrary/Screens/update.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:booklibrary/Screens/DetailesBookUser.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../models/add_book_user.dart';
 import 'addBook.dart';
 
@@ -17,22 +13,19 @@ class ItemList extends StatefulWidget {
 }
 
 class _ItemListState extends State<ItemList> {
-  late Book b;
-  FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-  late String action;
+  List<Book> _books = [];
   @override
-  Future<void> initState() async {
-    // TODO: implement initState
-    super.initState();
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-     action = prefs.getString('user_id')!;
-  }
-  // CollectionReference _reference =
-  // FirebaseFirestore.instance.collection('book_user');
+  final _bookService = BookServiceUser();
 
-  //_reference.get()  ---> returns Future<QuerySnapshot>
-  //_reference.snapshots()--> Stream<QuerySnapshot> -- realtime updates
-  late Stream<QuerySnapshot> _stream;
+  @override
+  void initState() {
+    super.initState();
+    _bookService.getBooks().then((books) {
+      setState(() {
+        _books = books;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,76 +60,118 @@ class _ItemListState extends State<ItemList> {
       //   ),
       //   backgroundColor: Colors.indigo[900],
       // ),
-
-      body: FirebaseAnimatedList(
-        query: db_Ref,
-        shrinkWrap: true,
-        itemBuilder: (context, snapshot, animation, index) {
-          Map Contact = snapshot.value as Map;
-          Contact['key'] = snapshot.key;
-          return GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => UpdateRecord(
-                    Contact_Key: Contact['key'],
+        body:Container(
+          child: _books != null
+              ? GridView.builder(
+            padding: EdgeInsets.all(10.0),
+            itemCount: _books.length,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              childAspectRatio: 0.9,
+            ),
+            itemBuilder: (context, index) {
+              return GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => DetailsBookUser(selectedBook: _books[index]),
+                    ),
+                  );
+                },
+                child: Container(
+                  child: Card(
+                    child: Column(
+                      children: [
+                        Image.network(
+                          _books[index].image, height: 50, width: 60,),
+                        Text(_books[index].name),
+                        Text(_books[index].auther),
+                      ],
+                    ),
                   ),
                 ),
               );
-              print(Contact['key']);
             },
-
-            child: Container(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ListTile(
-                  shape: RoundedRectangleBorder(
-                    side: BorderSide(
-                      color: Colors.white,
-                    ),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  tileColor: Colors.grey[300],
-                  // trailing: IconButton(
-                  //   icon: Icon(
-                  //     Icons.delete,
-                  //     color: Colors.red[900],
-                  //   ),
-                  //   onPressed: () {
-                  //     db_Ref.child(Contact['key']).remove();
-                  //   },
-                  // ),
-                  leading: CircleAvatar(
-                    backgroundImage: NetworkImage(
-                      Contact['url'],
-                    ),
-                  ),
-                  title: Text(
-                    Contact['name'],
-                    style: TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  subtitle: Text(
-                    Contact['auther'],
-                    style: TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          );
-        },
-
-      ),
+          )
+              : Center(
+            child: CircularProgressIndicator(),
+          ),
+        )
 
     );
   }
-  }
+}
+
+  //     body: FirebaseAnimatedList(
+  //       query: db_Ref,
+  //       shrinkWrap: true,
+  //       itemBuilder: (context, snapshot, animation, index) {
+  //         Map Contact = snapshot.value as Map;
+  //         Contact['key'] = snapshot.key;
+  //         return GestureDetector(
+  //           onTap: () {
+  //             Navigator.push(
+  //               context,
+  //               MaterialPageRoute(
+  //                 builder: (_) => UpdateRecord(
+  //                   Contact_Key: Contact['key'],
+  //                 ),
+  //               ),
+  //             );
+  //             print(Contact['key']);
+  //           },
+  //
+  //           child: Container(
+  //             child: Padding(
+  //               padding: const EdgeInsets.all(8.0),
+  //               child: ListTile(
+  //                 shape: RoundedRectangleBorder(
+  //                   side: BorderSide(
+  //                     color: Colors.white,
+  //                   ),
+  //                   borderRadius: BorderRadius.circular(10),
+  //                 ),
+  //                 tileColor: Colors.grey[300],
+  //                 // trailing: IconButton(
+  //                 //   icon: Icon(
+  //                 //     Icons.delete,
+  //                 //     color: Colors.red[900],
+  //                 //   ),
+  //                 //   onPressed: () {
+  //                 //     db_Ref.child(Contact['key']).remove();
+  //                 //   },
+  //                 // ),
+  //                 leading: CircleAvatar(
+  //                   backgroundImage: NetworkImage(
+  //                     Contact['url'],
+  //                   ),
+  //                 ),
+  //                 title: Text(
+  //                   Contact['name'],
+  //                   style: TextStyle(
+  //                     fontSize: 25,
+  //                     fontWeight: FontWeight.bold,
+  //                   ),
+  //                 ),
+  //                 subtitle: Text(
+  //                   Contact['auther'],
+  //                   style: TextStyle(
+  //                     fontSize: 25,
+  //                     fontWeight: FontWeight.bold,
+  //                   ),
+  //                 ),
+  //               ),
+  //             ),
+  //           ),
+  //         );
+  //       },
+  //
+  //     ),
+  //
+  //   );
+  // }
+  // }
     /*return Scaffold(
       appBar: AppBar(
         title: Text('Items'),

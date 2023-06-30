@@ -1,16 +1,20 @@
+
 import 'package:firebase_database/firebase_database.dart';
 
 class Bookhome {
   final String id;
+  final String book_category;
+  final int book_count;
+  final String description;
+  final String imageUrl;
    String name;
   final String auther;
-  final String description;
-  final String price;
- final String book_category;
-  final String book_count;
-  final String imageUrl;
+  final int price;
+  bool fave;
 
-  Bookhome(this.id, this.name, this.auther ,this.imageUrl, this.description, this.price, this.book_category, this.book_count);
+
+  Bookhome(this.id, this.book_category, this.book_count, this.description,
+      this.imageUrl, this.name, this.auther, this.price, this.fave);
   //Bookhome({required this.id, required this.name, required this.auther,required this.description,required this.price,required this.book_category,required this.book_count, required this.imageUrl});
 
 }
@@ -24,14 +28,15 @@ class BookService {
 
     final books = data.entries.map((entry) {
       final id = entry.key;
-      final title = entry.value['name'];
-      final author = entry.value['name_auther'];
-      final description = entry.value['description'];
-      final price = entry.value['price'];
       final book_caterg = entry.value['cat_book'];
       final book_count = entry.value['count'];
+      final description = entry.value['description'];
       final image = entry.value['image'];
-      return Bookhome(id, title, author , description,price,book_caterg,book_count,image,);
+      final title = entry.value['name'];
+      final author = entry.value['name_auther'];
+      final price = entry.value['price'];
+      final fave1 = false;
+      return Bookhome(id, book_caterg, book_count , description,image,title,author,price,fave1);
     }).toList();
 
     return books;

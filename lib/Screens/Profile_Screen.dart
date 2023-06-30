@@ -3,10 +3,10 @@ import 'package:booklibrary/Screens/UpdateProfile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../auth/login_screen.dart';
+import 'RestPassword.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -66,28 +66,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 onTap: () {},
                 child: Row(
                   children: [
-                    SvgPicture.asset(
+                    Image.asset(
                       'images/person.svg',
                       height: 24.h,
                       width: 24.w,
                     ),
                     SizedBox(width: 8.w),
+                    TextButton(onPressed: (){
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context){
+                        return  UpdateProfileScreen(studentKey: 'id');
+                      }));
+                    }, child:
                     Text(
-                      'تحديث بياناتي  ',
+                      'تحديث بياناتي',
                       style: GoogleFonts.poppins(
                         fontSize: 16.sp,
                         fontWeight: FontWeight.w500,
                         color: Colors.black,
                       ),
                     ),
+                    ),
                     const Spacer(),
-                    IconButton(onPressed: (){
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context){
-                        return const UpdateProfileScreen(studentKey: 'id',);
-                      }));
-
-                    }, icon: const Icon(Icons.arrow_forward_ios)),
-
+                    const Icon(Icons.arrow_forward_ios),
                   ],
                 ),
               ),
@@ -104,7 +104,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     SizedBox(width: 8.w),
                     TextButton(onPressed: (){
-
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context){
+                        return  ResetScreen();
+                      }));
                     }, child:
                     Text(
                       'اعادة كلمة المرور',
@@ -156,20 +158,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       width: 24.w,
                     ),
                     SizedBox(width: 8.w),
+                    TextButton(onPressed: (){
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context){
+                        return  MyBookUser();
+                      }));
+                    }, child:
                     Text(
-                      'كتبي ',
+                      'كتبي',
                       style: GoogleFonts.poppins(
                         fontSize: 16.sp,
                         fontWeight: FontWeight.w500,
                         color: Colors.black,
                       ),
                     ),
+                    ),
                     const Spacer(),
-    IconButton(onPressed: (){
-      Navigator.of(context).push(MaterialPageRoute(builder: (context){
-        return const MyBook();
-      }));
-    }, icon: const Icon(Icons.arrow_forward_ios))
+                    const Icon(Icons.arrow_forward_ios),
                   ],
                 ),
               ),
@@ -185,6 +189,35 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       width: 24.w,
                     ),
                     SizedBox(width: 8.w),
+                    TextButton(onPressed: (){
+                      showDialog(context: context, builder: (ctx){
+                        return AlertDialog(
+                          title: Text('تنبيه !'),
+                          content: Text('هل انت متأكد من انك تريد تسجيل خروج ؟'),
+                          actions: [
+
+                            TextButton(onPressed: (){
+
+                              Navigator.of(ctx).pop();
+
+                            }, child: Text('لا'),),
+
+
+                            TextButton(onPressed: (){
+                              Navigator.of(ctx).pop();
+
+                              FirebaseAuth.instance.signOut();
+
+                              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context){
+                                return  LoginScreen();
+                              }));
+
+                            }, child: Text('نعم'),),
+
+                          ],
+                        );
+                      });
+                    }, child:
                     Text(
                       'تسجيل خروج',
                       style: GoogleFonts.poppins(
@@ -193,35 +226,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         color: Colors.black,
                       ),
                     ),
+                    ),
                     const Spacer(),
-                     IconButton(onPressed: (){showDialog(context: context, builder: (ctx){
-    return AlertDialog(
-    title: Text('تنبيه !'),
-    content: Text('هل انت متأكد من انك تريد تسجيل خروج ؟'),
-    actions: [
-
-    TextButton(onPressed: (){
-
-    Navigator.of(ctx).pop();
-
-    }, child: Text('لا'),),
-
-
-    TextButton(onPressed: (){
-    Navigator.of(ctx).pop();
-
-    FirebaseAuth.instance.signOut();
-
-    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context){
-    return  LoginScreen();
-    }));
-
-    }, child: Text('نعم'),),
-
-    ],
-    );
-    });
-                    }, icon: const Icon(Icons.arrow_forward_ios)),
+                    const Icon(Icons.arrow_forward_ios),
                   ],
                 ),
               ),

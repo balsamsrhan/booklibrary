@@ -1,17 +1,18 @@
+import 'package:booklibrary/models/add_book_user.dart';
 import 'package:booklibrary/models/bokdemo.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 
-class DetailsPage extends StatefulWidget {
-  Bookhome selectedBook;
-  DetailsPage({Key? key, required this.selectedBook}) : super(key: key);
+class DetailsBookUser extends StatefulWidget {
+  Book selectedBook;
+  DetailsBookUser({Key? key, required this.selectedBook}) : super(key: key);
   @override
-  _DetailsPageState createState() => _DetailsPageState();
+  _DetailsBookUserState createState() => _DetailsBookUserState();
 }
 
-class _DetailsPageState extends State<DetailsPage> {
+class _DetailsBookUserState extends State<DetailsBookUser> {
   final database = FirebaseDatabase.instance.ref();
   bool faved = false;
   @override
@@ -24,73 +25,73 @@ class _DetailsPageState extends State<DetailsPage> {
       appBar: AppBar(
         backgroundColor: Color(0xffffffff),
         elevation: 0.0,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 20.0),
-            child: IconButton(
-              onPressed: () async {
-                try {
-                  final nextRef = <String, dynamic>{
-                    'name': widget.selectedBook.name,
-                    'price': widget.selectedBook.price,
-                    'image': widget.selectedBook.imageUrl,
-                  };
-                  String? key;
-                  await database
-                      .child('favourites')
-                      .orderByChild('name')
-                      .equalTo(widget.selectedBook.name)
-                      .onChildAdded
-                      .listen((event) {
-                    setState(() {
-                      key = event.snapshot.key.toString();
-                    });
-                  }, onError: (Object o) {
-                    print(o.toString());
-                  });
-                  try {
-                    favRef
-                        .orderByChild('name')
-                        .equalTo(widget.selectedBook.name)
-                        .once()
-                        .then((value) => {
-                      if (value.snapshot.exists)
-                        {
-                          database
-                              .child('favourites')
-                              .child(key!)
-                              .remove(),
-                          setState(() {
-                            widget.selectedBook.fave = false;
-                          }),
-                        }
-                      else
-                        {
-                          database
-                              .child('favourites')
-                              .push()
-                              .set(nextRef),
-                          setState(() {
-                            widget.selectedBook.fave = true;
-                          }),
-                        }
-                    });
-                  } catch (e) {
-                    print(e.toString());
-                  }
-                } catch (e) {
-                  print(e.toString());
-                }
-              },
-              icon: ImageIcon(
-                widget.selectedBook.fave
-                    ? const AssetImage("images/favicon.png")
-                    : const AssetImage("images/notfav_icon.png"),
-                color: Colors.black,
-              ),
-            ),
-          )
-        ],
+      //   actions: [
+      //     Padding(
+      //       padding: const EdgeInsets.only(right: 20.0),
+      //       child: IconButton(
+      //         onPressed: () async {
+      //           try {
+      //             final nextRef = <String, dynamic>{
+      //               'name': widget.selectedBook.name,
+      //               'price': widget.selectedBook.price,
+      //               'image': widget.selectedBook.imageUrl,
+      //             };
+      //             String? key;
+      //             await database
+      //                 .child('favourites')
+      //                 .orderByChild('name')
+      //                 .equalTo(widget.selectedFood.name)
+      //                 .onChildAdded
+      //                 .listen((event) {
+      //               setState(() {
+      //                 key = event.snapshot.key.toString();
+      //               });
+      //             }, onError: (Object o) {
+      //               print(o.toString());
+      //             });
+      //             try {
+      //               favRef
+      //                   .orderByChild('name')
+      //                   .equalTo(widget.selectedFood.name)
+      //                   .once()
+      //                   .then((value) => {
+      //                 if (value.snapshot.exists)
+      //                   {
+      //                     database
+      //                         .child('favourites')
+      //                         .child(key!)
+      //                         .remove(),
+      //                     setState(() {
+      //                       widget.selectedFood.fave = false;
+      //                     }),
+      //                   }
+      //                 else
+      //                   {
+      //                     database
+      //                         .child('favourites')
+      //                         .push()
+      //                         .set(nextRef),
+      //                     setState(() {
+      //                       widget.selectedFood.fave = true;
+      //                     }),
+      //                   }
+      //               });
+      //             } catch (e) {
+      //               print(e.toString());
+      //             }
+      //           } catch (e) {
+      //             print(e.toString());
+      //           }
+      //         },
+      //         icon: ImageIcon(
+      //           widget.selectedFood.fave
+      //               ? const AssetImage("images/favicon.png")
+      //               : const AssetImage("images/notfav_icon.png"),
+      //           color: Colors.black,
+      //         ),
+      //       ),
+      //     )
+      //   ],
         automaticallyImplyLeading: false,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -125,7 +126,7 @@ class _DetailsPageState extends State<DetailsPage> {
                   Column(
                     children: [
                       Image(
-                        image: NetworkImage(widget.selectedBook.imageUrl),
+                        image: NetworkImage(widget.selectedBook.image),
                         height: 241.21,
                         width: 241.21,
                       ),
@@ -142,7 +143,7 @@ class _DetailsPageState extends State<DetailsPage> {
                     height: 10,
                   ),
                   Text(
-                    widget.selectedBook.price.toString(),
+                    widget.selectedBook.phone,
                     style: TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: 22,
@@ -194,7 +195,7 @@ class _DetailsPageState extends State<DetailsPage> {
                   SizedBox(
                     height: 60,
                     child: Text(
-                      widget.selectedBook.description,
+                      widget.selectedBook.details,
                       style: TextStyle(
                         fontSize: 15,
                       ),
@@ -203,85 +204,85 @@ class _DetailsPageState extends State<DetailsPage> {
                   SizedBox(
                     height: 30,
                   ),
-
-                       Row(
-                        children: [
-                          Text(
-                            widget.selectedBook.price.toString(),
-                            style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 22,
-                                color: Color(0xffefdfcf)),
-                          ),
-        Container(
-          height: 60,
-          width: 200,
-          decoration: BoxDecoration(
-            color: Color(0xffFA4A0C),
-            borderRadius: BorderRadius.circular(25.0),
-          ),
-                         child: TextButton(
-                              onPressed: () async {
-                                try {
-                                  final nextRef = <String, dynamic>{
-                                    'name': widget.selectedBook.name,
-                                    'price': widget.selectedBook.price,
-                                    'image': widget.selectedBook.imageUrl,
-                                    'count': 1,
-                                  };
-                                  String? key;
-                                  await database
-                                      .child('cart')
-                                      .orderByChild('name')
-                                      .equalTo(widget.selectedBook.name)
-                                      .onChildAdded
-                                      .listen((event) {
-                                    setState(() {
-                                      key = event.snapshot.key.toString();
-                                    });
-                                  }, onError: (Object o) {
-                                    print(o.toString());
-                                  });
-
-                                  try {
-                                    ref
-                                        .orderByChild('name')
-                                        .equalTo(widget.selectedBook.name)
-                                        .once()
-                                        .then((value) => {
-                                      if (value.snapshot.exists)
-                                        {
-                                          database
-                                              .child('cart')
-                                              .child(key!)
-                                              .child('count')
-                                              .set(widget
-                                              .selectedBook.book_count)
-                                        }
-                                      else
-                                        {
-                                          database
-                                              .child('cart')
-                                              .push()
-                                              .set(nextRef)
-                                        }
-                                    });
-                                  } catch (e) {
-                                    print(e.toString());
-                                  }
-                                } catch (e) {
-                                  print('You got an error $e');
-                                }
-
-                                Navigator.pop(context);
-                              },
-                              child: Text(
-                                "Add to chart",
-                                style: TextStyle(color: Colors.white, fontSize: 17),
-                              )),
-        ),
-                        ],
-                ),
+                  //
+                  // Row(
+                  //   children: [
+                  //     Text(
+                  //       widget.selectedFood.price.toString(),
+                  //       style: TextStyle(
+                  //           fontWeight: FontWeight.w500,
+                  //           fontSize: 22,
+                  //           color: Color(0xffefdfcf)),
+                  //     ),
+                  //     Container(
+                  //       height: 60,
+                  //       width: 200,
+                  //       decoration: BoxDecoration(
+                  //         color: Color(0xffFA4A0C),
+                  //         borderRadius: BorderRadius.circular(25.0),
+                  //       ),
+                  //       child: TextButton(
+                  //           onPressed: () async {
+                  //             try {
+                  //               final nextRef = <String, dynamic>{
+                  //                 'name': widget.selectedFood.name,
+                  //                 'price': widget.selectedFood.price,
+                  //                 'image': widget.selectedFood.imageUrl,
+                  //                 'count': 1,
+                  //               };
+                  //               String? key;
+                  //               await database
+                  //                   .child('cart')
+                  //                   .orderByChild('name')
+                  //                   .equalTo(widget.selectedFood.name)
+                  //                   .onChildAdded
+                  //                   .listen((event) {
+                  //                 setState(() {
+                  //                   key = event.snapshot.key.toString();
+                  //                 });
+                  //               }, onError: (Object o) {
+                  //                 print(o.toString());
+                  //               });
+                  //
+                  //               try {
+                  //                 ref
+                  //                     .orderByChild('name')
+                  //                     .equalTo(widget.selectedFood.name)
+                  //                     .once()
+                  //                     .then((value) => {
+                  //                   if (value.snapshot.exists)
+                  //                     {
+                  //                       database
+                  //                           .child('cart')
+                  //                           .child(key!)
+                  //                           .child('count')
+                  //                           .set(widget
+                  //                           .selectedFood.book_count)
+                  //                     }
+                  //                   else
+                  //                     {
+                  //                       database
+                  //                           .child('cart')
+                  //                           .push()
+                  //                           .set(nextRef)
+                  //                     }
+                  //                 });
+                  //               } catch (e) {
+                  //                 print(e.toString());
+                  //               }
+                  //             } catch (e) {
+                  //               print('You got an error $e');
+                  //             }
+                  //
+                  //             Navigator.pop(context);
+                  //           },
+                  //           child: Text(
+                  //             "Add to chart",
+                  //             style: TextStyle(color: Colors.white, fontSize: 17),
+                  //           )),
+                  //     ),
+                  //   ],
+                  // ),
                 ],
               ),
             ),

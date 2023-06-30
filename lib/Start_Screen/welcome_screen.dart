@@ -171,7 +171,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset('images/w2.png'),
+          Image.asset('images/splach.png'),
           Text(
             'مرحباً',
             style: GoogleFonts.poppins(

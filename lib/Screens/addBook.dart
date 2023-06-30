@@ -1,5 +1,6 @@
 
 import 'dart:io';
+import 'package:booklibrary/widgtes/app_button.dart';
 import 'package:booklibrary/widgtes/app_text_field.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -24,6 +25,8 @@ class _AddItemState extends State<AddItem> with Helpers{
   TextEditingController _controllerdetailes = TextEditingController();
   TextEditingController _controllerauther = TextEditingController();
   TextEditingController _controllerphone = TextEditingController();
+  String dialCodeInitial = '+970';
+  String result = '';
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   DatabaseReference dbRef = FirebaseDatabase.instance.ref().child('Book_user');
   File? file;
@@ -44,6 +47,7 @@ class _AddItemState extends State<AddItem> with Helpers{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
     // appBar: AppBar(
     //   title: Text(
     //     'Add Book',
@@ -83,50 +87,60 @@ class _AddItemState extends State<AddItem> with Helpers{
     },
     )),
     ),
-      SizedBox(height: 30.h),
+      Padding(padding: EdgeInsets.symmetric(horizontal: 20.w),
+      child:
       AppTextField(
         textEditingController: _controllerName,
         hintText: 'اسم الكتاب',
         keyboardType: TextInputType.text,
       ),
+      ),
       SizedBox(height: 30.h),
+      Padding(padding: EdgeInsets.symmetric(horizontal: 20.w),
+      child:
       AppTextField(
         textEditingController: _controllerauther,
         hintText: 'اسم مؤلف الكتاب',
         keyboardType: TextInputType.text,
       ),
-      SizedBox(height: 30.h),
-      AppTextField(
-        textEditingController: _controllerdetailes,
-        hintText: 'وصف عن الكتاب',
-        keyboardType: TextInputType.text,
       ),
-      AppTextField(
+      SizedBox(height: 30.h),
+      Padding(padding: EdgeInsets.symmetric(horizontal: 15.w),
+      child:
+      TextField(
+        controller: _controllerdetailes,
+        keyboardType: TextInputType.multiline,
+        maxLines: 4,
+        decoration: InputDecoration(
+            hintText: "وصف عن الكتاب",
+            border: OutlineInputBorder(
+                borderSide: BorderSide(width: 4, color: Colors.black)
+            )
+        ),
+
+      ),
+      ),
+      Padding(padding: EdgeInsets.symmetric(horizontal: 15.w),
+    child: AppTextField(
         textEditingController: _controllerphone,
         hintText: 'رقم لتواصل',
-        keyboardType: TextInputType.text,
+        keyboardType: TextInputType.phone,
       ),
-      SizedBox(
+      ),
+      Padding(padding: EdgeInsets.symmetric(horizontal: 15.w),
+     child: SizedBox(
         height: 30,
       ),
-    MaterialButton(
-    height: 40,
-    onPressed: () {
-    // getImage();
-
-    if (file != null) {
-    uploadFile();
-    }
-    },
-    child: Text(
-    "اضافة كتاب",
-    style: TextStyle(
-    color: Color.fromARGB(255, 255, 255, 255),
-    fontSize: 20,
+      ),
+ Padding(padding: EdgeInsets.symmetric(horizontal: 15.w),
+ child:AppButton(
+   onPress: () {
+      if (file != null) {
+        uploadFile();
+      }
+    }, text: 'اضافة كتاب',
     ),
-    ),
-    color: Colors.brown[400],
-    ),
+ ),
     ],
     ),
     ),
@@ -161,6 +175,7 @@ class _AddItemState extends State<AddItem> with Helpers{
           'auther': _controllerauther.text,
           'details': _controllerdetailes.text,
           'url': url,
+          'phone' : _controllerphone.text
         };
 
         dbRef!.push().set(Contact).whenComplete(() {

@@ -1,3 +1,4 @@
+import 'package:booklibrary/Screens/CategoryScreen.dart';
 import 'package:booklibrary/Screens/DetailsScreen.dart';
 import 'package:booklibrary/models/add_book_user.dart';
 import 'package:booklibrary/models/bokdemo.dart';
@@ -30,10 +31,33 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Bookstore'),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            SizedBox(
+              height: 40,
+              width: 40,
+              child: IconButton(
+                // Your drawer Icon
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CategoryScreen()),
+                    );
+                },
+                icon: ImageIcon(
+                  AssetImage("images/appbar_back.png"),
+                  color: Colors.black,
+                ),
+              ),
+            ),
+            // Your widgets here
+          ],
+        ),
       ),
-
-      body:Container(
+        body:Container(
     child: _books != null
           ? GridView.builder(
         padding: EdgeInsets.all(10.0),
@@ -48,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => DetailsScreen(_books[index]),
+                  builder: (context) => DetailsPage(selectedBook: _books[index]),
                 ),
               );
             },

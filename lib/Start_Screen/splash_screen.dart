@@ -23,28 +23,58 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children:[
-        Container(
-        height: double.infinity,
-        width: double.infinity,
+    return Scaffold(
+      body: Container(
+        alignment: Alignment.center,
         color: Colors.white,
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-           Image.asset('images/splach.png'),
+            const SizedBox(
+              height: 80,
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.5,
+              width: MediaQuery.of(context).size.width * 0.5,
+              child: TweenAnimationBuilder(
+                tween: Tween<double>(begin: 3, end: 1),
+                duration: const Duration(seconds: 1),
+                curve: Curves.elasticOut,
+                builder: (context, value, child) {
+                  return Transform.scale(
+                    scale: value,
+                    child: TweenAnimationBuilder(
+                      tween: Tween<double>(begin: 2, end: 0),
+                      duration: const Duration(seconds: 5),
+                      curve: Curves.elasticOut,
+                      builder: (context, value, child) {
+                        return Transform.rotate(
+                          angle: value,
+                          child: Image.asset('images/w2.png'),
+                        );
+                      },
+                    ),
+                  );
+                },
+              ),
+            ),
+            const SizedBox(
+              height: 80,
+            ),
             Text(
-          'مكتبة نون',
-              style: GoogleFonts.poppins(
-                fontSize: 30.sp,
-                fontWeight: FontWeight.w600,
-                color: Colors.black,
+              'مكتبة نون',
+              style: GoogleFonts.lobster(
+                color: Colors.black45,
+                letterSpacing: 0,
+                fontWeight: FontWeight.bold,
+                fontSize: 40,
               ),
             ),
           ],
         ),
       ),
-    ],
     );
   }
 }

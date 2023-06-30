@@ -72,16 +72,16 @@ class FirebaseAuthHelper {
       return false;
     });
   }
-
-  Future<bool> addDataBookUser(Book book) async {
-    return await _firebaseFirestore
-        .collection("Book_Users")
-        .add(book.toMap())
-        .then((value) => true)
-        .onError((error, stackTrace){
-      print(error);
-      return false;
-    });
-  }
+  //
+  // Future<bool> addDataBookUser(Book book) async {
+  //   return await _firebaseFirestore
+  //       .collection("Book_Users")
+  //       .add(book.toMap())
+  //       .then((value) => true)
+  //       .onError((error, stackTrace){
+  //     print(error);
+  //     return false;
+  //   });
+  // }
 
 }
