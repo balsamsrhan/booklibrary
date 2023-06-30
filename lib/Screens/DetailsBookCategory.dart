@@ -46,12 +46,12 @@ class _BooksScreenState extends State<BooksScreen> {
           itemBuilder: (context, index) {
             return GestureDetector(
               onTap: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //     builder: (context) => D(_books[index]),
-                //   ),
-                // );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => DetailsPage(selectedBook: _books[index]),
+                  ),
+                );
               },
               child: Card(
                 child: Column(

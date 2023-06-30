@@ -57,6 +57,10 @@ dependencies:
   firebase_database: ^10.2.2
   bubble_tab_indicator: ^0.1.6
   carousel_slider:
+  google_maps_flutter:
+  permission_handler: ^10.4.1
+  location: ^4.4.0
+  geolocator: ^9.0.2
 
 
 

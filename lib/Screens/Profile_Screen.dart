@@ -1,5 +1,7 @@
+import 'package:booklibrary/Screens/AddressScreen.dart';
 import 'package:booklibrary/Screens/MyBookUser.dart';
 import 'package:booklibrary/Screens/UpdateProfile.dart';
+import 'package:booklibrary/main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -124,7 +126,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               SizedBox(height: 20.h),
               InkWell(
-                onTap: () {},
+                onTap: () {
+                },
                 child: Row(
                   children: [
                     Image.asset(
@@ -133,6 +136,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       width: 24.w,
                     ),
                     SizedBox(width: 8.w),
+                    TextButton(onPressed: (){
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context){
+                        return  MyAdress();
+                      }));
+                    }, child:
                     Text(
                       'العنوان',
                       style: GoogleFonts.poppins(
@@ -140,6 +148,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         fontWeight: FontWeight.w500,
                         color: Colors.black,
                       ),
+                    ),
                     ),
                     const Spacer(),
                     const Icon(Icons.arrow_forward_ios),
