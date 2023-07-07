@@ -11,14 +11,14 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  //splachservice spservice = splachservice();
+  splachservice spservice = splachservice();
   @override
   void initState() {
     super.initState();
     Future.delayed(const Duration(seconds: 5), () {
       Navigator.pushReplacementNamed(context, '/onboarding_screen');
     });
-//spservice.islogn(context);
+spservice.islogn(context);
   }
 
   @override

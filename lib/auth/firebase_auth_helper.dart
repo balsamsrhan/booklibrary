@@ -1,13 +1,12 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../models/User.dart';
-import '../models/add_book_user.dart';
-
 class FirebaseAuthHelper {
+  FirebaseAuthHelper._();
+
+  static final FirebaseAuthHelper firebaseAuthHelper = FirebaseAuthHelper._();
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-  FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
+
 
   //TODO : Sign In Anonymously
   Future<Map<String, dynamic>> SignInAnonymously() async {
@@ -61,27 +60,4 @@ class FirebaseAuthHelper {
     }
     return res;
   }
-
-  Future<bool> addData(Users users) async {
-    return await _firebaseFirestore
-        .collection("Users")
-        .add(users.toMap())
-        .then((value) => true)
-        .onError((error, stackTrace){
-      print(error);
-      return false;
-    });
-  }
-  //
-  // Future<bool> addDataBookUser(Book book) async {
-  //   return await _firebaseFirestore
-  //       .collection("Book_Users")
-  //       .add(book.toMap())
-  //       .then((value) => true)
-  //       .onError((error, stackTrace){
-  //     print(error);
-  //     return false;
-  //   });
-  // }
-
 }

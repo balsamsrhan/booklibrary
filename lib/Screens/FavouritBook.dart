@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import '../models/cart.dart';
 
@@ -87,56 +88,42 @@ _activateListeners();
                           child: InkWell(
                             onTap: () {},
                             child: Card(
-                              elevation: 6.0,
+                              elevation: 2,
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30.0),
+                                borderRadius: BorderRadius.circular(30.r),
                               ),
-                              child: Stack(
+                              child: Row(
                                 children: [
-                                  Positioned(
-                                    left: 10,
-                                    top: 10,
-                                    child: Image(
-                                      image: NetworkImage(
-                                          favouritesList[index].imagepath!),
-                                      height: 100,
-                                      width: 100,
+                                  Image(
+                                    image:
+                                    NetworkImage(favouritesList[index].imagepath!),
+                                    height: 100,
+                                    width: 100,
+                                  ),
+                                  Expanded(
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          favouritesList[index].name.toString(),
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 20),
+                                        ),
+                                        Text(
+                                          '₪'+ favouritesList[index].price.toString(),
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 15,
+                                              color: Color(0xffFA4A0C)),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                  Positioned(
-                                    left: 120,
-                                    top: 10,
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: 10.0, bottom: 10.0),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            favouritesList[index]
-                                                .name
-                                                .toString(),
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 17),
-                                          ),
-                                          SizedBox(
-                                            height: 10,
-                                          ),
-                                          Text(
-                                            favouritesList[index]
-                                                .price
-                                                .toString(),
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 15,
-                                                color: Color(0xffFA4A0C)),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
+                                  SizedBox(width: 10.w),
+                                 // ItemPropotion(favouritesList[index]),
+                                  SizedBox(width: 10.w),
                                 ],
                               ),
                             ),

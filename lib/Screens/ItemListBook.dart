@@ -1,6 +1,7 @@
 import 'package:booklibrary/Screens/DetailesBookUser.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../models/add_book_user.dart';
 import 'addBook.dart';
 
@@ -61,7 +62,8 @@ class _ItemListState extends State<ItemList> {
       //   backgroundColor: Colors.indigo[900],
       // ),
         body:Container(
-          child: _books != null
+          child:
+           _books != null
               ? GridView.builder(
             padding: EdgeInsets.all(10.0),
             itemCount: _books.length,
@@ -78,17 +80,29 @@ class _ItemListState extends State<ItemList> {
                       builder: (context) => DetailsBookUser(selectedBook: _books[index]),
                     ),
                   );
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //     builder: (context) => DetailsPage(selectedBook: _books[index]),
+                  //   ),
+                  // );
                 },
-                child: Container(
-                  child: Card(
-                    child: Column(
-                      children: [
-                        Image.network(
-                          _books[index].image, height: 50, width: 60,),
-                        Text(_books[index].name),
-                        Text(_books[index].auther),
-                      ],
-                    ),
+                child: Card(
+                  elevation: 5,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.r),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: Image.network(
+                          _books[index].image, fit: BoxFit.contain,),
+                      ),
+                      Text(_books[index].name,textAlign: TextAlign.center,),
+                      Text(_books[index].auther),
+                      SizedBox(height: 10.h),
+                    ],
                   ),
                 ),
               );
@@ -97,6 +111,44 @@ class _ItemListState extends State<ItemList> {
               : Center(
             child: CircularProgressIndicator(),
           ),
+
+
+          // _books != null
+          //     ? GridView.builder(
+          //   padding: EdgeInsets.all(10.0),
+          //   itemCount: _books.length,
+          //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          //     crossAxisCount: 2,
+          //     childAspectRatio: 0.9,
+          //   ),
+          //   itemBuilder: (context, index) {
+          //     return GestureDetector(
+          //       onTap: () {
+          //         Navigator.push(
+          //           context,
+          //           MaterialPageRoute(
+          //             builder: (context) => DetailsBookUser(selectedBook: _books[index]),
+          //           ),
+          //         );
+          //       },
+          //       child: Container(
+          //         child: Card(
+          //           child: Column(
+          //             children: [
+          //               Image.network(
+          //                 _books[index].image, height: 50, width: 60,),
+          //               Text(_books[index].name),
+          //               Text(_books[index].auther),
+          //             ],
+          //           ),
+          //         ),
+          //       ),
+          //     );
+          //   },
+          // )
+          //     : Center(
+          //   child: CircularProgressIndicator(),
+          // ),
         )
 
     );

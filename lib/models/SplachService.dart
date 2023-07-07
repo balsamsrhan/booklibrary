@@ -12,7 +12,8 @@ class splachservice{
     if(user != null){
       Navigator.push(context, MaterialPageRoute(builder: (context) => BottomNavigationScreen()));
 
-    }else{
+    }
+    else{
       Timer(const Duration(seconds: 3),
               ()=> Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()))
       );

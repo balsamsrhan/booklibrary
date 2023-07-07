@@ -215,11 +215,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             TextButton(onPressed: (){
                               Navigator.of(ctx).pop();
 
-                              FirebaseAuth.instance.signOut();
+                              FirebaseAuth.instance.signOut().then((value){
+                                Navigator.push(context,MaterialPageRoute(builder: (context){
+                                  return  LoginScreen();
+                                }));
+                              });
 
-                              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context){
-                                return  LoginScreen();
-                              }));
+
 
                             }, child: Text('نعم'),),
 

@@ -5,6 +5,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../Shared_Pref/Shard_Pref_Controller.dart';
 import '../models/add_book_user.dart';
 import 'addBook.dart';
 
@@ -22,15 +23,15 @@ class _MyBookUserState extends State<MyBookUser> {
   late String uuid;
   @override
   void initState() {
-    getPrefs();
     super.initState();
+    uuid = SharedPrefController().getUserID()!;
   }
 
-  Future<void> getPrefs() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    uuid = prefs.getString('user_id')!;
-    print("uuid: $uuid");
-  }
+  // Future<void> getPrefs() async {
+  //   prefs  = await SharedPreferences.getInstance();
+  //   uuid = prefs.getString('user_id')!;
+  //   print("uuid: $uuid");
+  // }
   // CollectionReference _reference =
   // FirebaseFirestore.instance.collection('book_user');
 
@@ -42,13 +43,7 @@ class _MyBookUserState extends State<MyBookUser> {
   Widget build(BuildContext context) {
     DatabaseReference db_Ref =
     FirebaseDatabase.instance.ref().child('Book_user');
-    // if(action  == ){
-    //
-    // }
     return Scaffold(
-
-
-
       body: FirebaseAnimatedList(
         query: db_Ref,
         shrinkWrap: true,

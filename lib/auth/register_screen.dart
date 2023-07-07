@@ -51,164 +51,176 @@ class _RegisterScreenState extends State<RegisterScreen> with Helpers{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: Icon(
-            color: Colors.black,
-            Icons.arrow_back_ios,
-          ),
-        ),
-      ),
+      backgroundColor: Color(0xFFEFDFCF),
       body: SafeArea(
-        child: ListView(
-          padding: EdgeInsets.symmetric(horizontal: 16.w),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 30.h),
-            Text(
-              'مرحبًا',
-              textAlign: TextAlign.center,
-              style: GoogleFonts.poppins(
-                fontSize: 24.sp,
-                fontWeight: FontWeight.w500,
-                color: Colors.black,
-              ),
-            ),
-            Text(
-              'مرحبا ، قم بالتسجيل للمتابعة!',
-              textAlign: TextAlign.center,
-              style: GoogleFonts.poppins(
-                fontSize: 16.sp,
-                fontWeight: FontWeight.w500,
-                color: Colors.grey.shade500,
-              ),
-            ),
-            SizedBox(height: 30.h),
-            AppTextField(
-              prefixIcon: Padding(
-                padding: const EdgeInsets.all(10),
-                child: SvgPicture.asset('images/profile.svg'),
-              ),
-              textEditingController: _nameController,
-              hintText: "ادخل اسمك بالكامل ",
-              keyboardType: TextInputType.text,
-            ),
-            SizedBox(height: 20.h),
-            AppTextField(
-              prefixIcon: Padding(
-                padding: const EdgeInsets.all(10),
-                child: SvgPicture.asset('images/email.svg'),
-              ),
-              textEditingController: _emailController,
-             hintText: 'أدخل عنوان البريد الالكتروني',
-              keyboardType: TextInputType.emailAddress,
-            ),
-            SizedBox(height: 20.h),
-            AppTextField(
-              prefixIcon: Padding(
-                padding: const EdgeInsets.all(10),
-                child: SvgPicture.asset('images/pass.svg'),
-              ),
-              textEditingController: _passwordController,
-              hintText: 'أدخل كلمة المرور',
-              keyboardType: TextInputType.phone,
-              obscure: obscure,
-              suffixIcon: IconButton(
-                onPressed: () {
-                  setState(() {
-                    obscure = !obscure;
-                  });
-                },
-                icon: Icon(
-                  obscure
-                      ? Icons.visibility_outlined
-                      : Icons.visibility_off_outlined,
-                ),
-              ),
-            ),
-            SizedBox(height: 20.h),
-            AppTextField(
-              prefixIcon: Padding(
-                padding: const EdgeInsets.all(10),
-                child: SvgPicture.asset('images/pass.svg'),
-              ),
-              textEditingController: _passwordController,
-              hintText: 'تأكيد كلمة المرور',
-              keyboardType: TextInputType.phone,
-              obscure: obscure2,
-              suffixIcon: IconButton(
-                onPressed: () {
-                  setState(() {
-                    obscure2 = !obscure2;
-                  });
-                },
-                icon: Icon(
-                  obscure2
-                      ? Icons.visibility_off_outlined
-                      : Icons.visibility_outlined,
-                ),
-              ),
-            ),
-            SizedBox(height: 20.h),
-            AppButton(
-              onPress: () async => await _performRegister(),
-                //Navigator.pushReplacementNamed(context, '/bn_screen');
-              text: 'الاشتراك',
-              buttonColor: const Color(0XFFC19A6B),
-            ),
-            SizedBox(height: 20.h),
-            Text(
-              'أو المتابعة بواسطة حساب التواصل الاجتماعي',
-              textAlign: TextAlign.center,
-              style: GoogleFonts.poppins(
-                fontSize: 16.sp,
-                fontWeight: FontWeight.w500,
-                color: Colors.grey.shade500,
-              ),
-            ),
-            SizedBox(height: 30.h),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SvgPicture.asset('images/google.svg'),
-                SizedBox(width: 10.w),
-               // SvgPicture.asset('images/facebook.svg'),
-             //   SizedBox(width: 10.w),
-                SvgPicture.asset('images/call.svg'),
-              ],
-            ),
-            SizedBox(height: 40.h),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'لديك حساب؟',
-                  style: GoogleFonts.poppins(
-                    fontSize: 15.sp,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black,
-                  ),
-                ),
-                SizedBox(height: 30.h,),
-                TextButton(
-                  onPressed: () {
-                    Navigator.pushReplacementNamed(context, '/login_screen');
-                  },
-                  child: Text(
-                    'سجل الدخول',
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: 30.h),
+                  Text(
+                    'مرحبًا',
+                    textAlign: TextAlign.center,
                     style: GoogleFonts.poppins(
-                      fontSize: 15.sp,
+                      fontSize: 24.sp,
                       fontWeight: FontWeight.w500,
+                      color: Colors.black,
                     ),
                   ),
-
+                  Text(
+                    'مرحبا ، قم بالتسجيل للمتابعة!',
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.poppins(
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black,
+                    ),
+                  ),
+                  SizedBox(height: 40.h),
+                ],
+              ),
+            ),
+            Expanded(
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(50.r),
+                    topRight: Radius.circular(50.r),
+                  ),
                 ),
-              ],
+                child: ListView(
+                  padding: EdgeInsets.symmetric(horizontal: 16.w),
+                  children: [
+                    SizedBox(height: 40.h),
+                    AppTextField(
+                      prefixIcon: Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: SvgPicture.asset('images/profile.svg'),
+                      ),
+                      textEditingController: _nameController,
+                      hintText: "ادخل اسمك بالكامل ",
+                      keyboardType: TextInputType.text,
+                    ),
+                    SizedBox(height: 20.h),
+                    AppTextField(
+                      prefixIcon: Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: SvgPicture.asset('images/email.svg'),
+                      ),
+                      textEditingController: _emailController,
+                      hintText: 'أدخل عنوان البريد الالكتروني',
+                      keyboardType: TextInputType.emailAddress,
+                    ),
+                    SizedBox(height: 20.h),
+                    AppTextField(
+                      prefixIcon: Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: SvgPicture.asset('images/pass.svg'),
+                      ),
+                      textEditingController: _passwordController,
+                      hintText: 'أدخل كلمة المرور',
+                      keyboardType: TextInputType.phone,
+                      obscure: obscure,
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            obscure = !obscure;
+                          });
+                        },
+                        icon: Icon(
+                          obscure
+                              ? Icons.visibility_outlined
+                              : Icons.visibility_off_outlined,
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 20.h),
+                    AppTextField(
+                      prefixIcon: Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: SvgPicture.asset('images/pass.svg'),
+                      ),
+                      textEditingController: _confirmPasswordController,
+                      hintText: 'تأكيد كلمة المرور',
+                      keyboardType: TextInputType.phone,
+                      obscure: obscure2,
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            obscure2 = !obscure2;
+                          });
+                        },
+                        icon: Icon(
+                          obscure2
+                              ? Icons.visibility_off_outlined
+                              : Icons.visibility_outlined,
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 20.h),
+                    AppButton(
+                      onPress: () async => await _performRegister(),
+                      //Navigator.pushReplacementNamed(context, '/bn_screen');
+                      text: 'الاشتراك',
+                      buttonColor: const Color(0XFFC19A6B),
+                    ),
+                    SizedBox(height: 20.h),
+                    Text(
+                      'أو المتابعة بواسطة :',
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.poppins(
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.grey.shade500,
+                      ),
+                    ),
+                    SizedBox(height: 30.h),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SvgPicture.asset('images/google.svg'),
+                        SizedBox(width: 40.w),
+                        // SvgPicture.asset('images/facebook.svg'),
+                        //   SizedBox(width: 10.w),
+                        SvgPicture.asset('images/call.svg'),
+                      ],
+                    ),
+                    SizedBox(height: 20.h),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'لديك حساب؟',
+                          style: GoogleFonts.poppins(
+                            fontSize: 15.sp,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black,
+                          ),
+                        ),
+                        SizedBox(height: 30.h,),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pushReplacementNamed(context, '/login_screen');
+                          },
+                          child: Text(
+                            'سجل الدخول',
+                            style: GoogleFonts.poppins(
+                              fontSize: 15.sp,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
             ),
           ],
         ),

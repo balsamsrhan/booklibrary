@@ -23,11 +23,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
   @override
   void initState() {
     super.initState();
-    _categoriesService.getCategories().then((categories) {
-      setState(() {
-        _categories = categories;
-      });
-    });
+ //f();
   }
 
   @override
@@ -37,14 +33,18 @@ class _CategoryScreenState extends State<CategoryScreen> {
           title: const Text('متجر الكتب'),
           elevation: 0.0,
         ),
-        body: _categories != null
-            ? GridView.builder(
+        body:Container(
+       child: _categories != null
+            ? ListView.builder(
+          shrinkWrap: true,
           padding: const EdgeInsets.all(10.0),
           itemCount: _categories.length,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            childAspectRatio: 0.9,
-          ),
+          scrollDirection: Axis.horizontal,
+          physics: const ClampingScrollPhysics(),
+          // gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          //   crossAxisCount: 2,
+          //   childAspectRatio: 0.9,
+          // ),
           itemBuilder: (context, index) {
             return GestureDetector(
               onTap: () {
@@ -56,15 +56,35 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   ),
                 );
               },
-              child: Card(
-                child: Center(child: Text(_categories[index].name)),
+              child: Row(
+                children: [
+                  new Row(children: [
+                    ElevatedButton(
+                      child:  Text(_categories[index].name),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => BooksScreen(
+                                idCategory: _categories[index].id.toString()),
+                          ),
+                        );
+                      },
+                    ),
+                  ])
+                ],
               ),
+              // child: Card(
+              //   child: Center(child: Text(_categories[index].name)),
+              // ),
             );
           },
         )
             : const Center(
           child: CircularProgressIndicator(),
-        ));
+        )
+        )
+    );
   }
 
 // SizedBox(

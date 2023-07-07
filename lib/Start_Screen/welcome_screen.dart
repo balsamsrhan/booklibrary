@@ -168,53 +168,81 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset('images/splach.png'),
-          Text(
-            'مرحباً',
-            style: GoogleFonts.poppins(
-              fontSize: 30.sp,
-              fontWeight: FontWeight.w600,
-              color: Colors.black,
-            ),
+          Expanded(
+            child: Image.asset('images/splach.png'),
           ),
-          Text(
-            'أسرع خدمة توصيل للكتب لك.',
-            style: GoogleFonts.poppins(
-              fontSize: 16.sp,
-              fontWeight: FontWeight.w600,
-              color: Colors.grey.shade500,
-            ),
-          ),
-          SizedBox(height: 10.h),
-          Row(
-            children: [
-              const Spacer(),
-              Expanded(
-                flex: 2,
-                child: AppButton(
-                  onPress: () {
-                    Navigator.pushReplacementNamed(context, '/login_screen');
-                  },
-                  text: 'تسجيل الدخول',
+          Expanded(
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(50.r),
+                  topRight: Radius.circular(50.r),
+                ),
+                color: Color(0xFFEFDFCF),
+              ),
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.w),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 20.h),
+                    Text(
+                      'مرحباً',
+                      style: GoogleFonts.poppins(
+                        fontSize: 30.sp,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black,
+                      ),
+                    ),
+                    SizedBox(height: 10.h),
+                    Text(
+                      'أسرع خدمة توصيل للكتب لك.',
+                      style: GoogleFonts.poppins(
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black,
+                      ),
+                    ),
+                    SizedBox(height: 40.h),
+                    Row(
+                      children: [
+                        const Spacer(),
+                        Expanded(
+                          flex: 2,
+                          child: AppButton(
+                            onPress: () {
+                              Navigator.pushReplacementNamed(
+                                  context, '/login_screen');
+                            },
+                            text: 'تسجيل الدخول',
+                            buttonColor: Colors.white,
+                            textColor: Colors.black,
+                          ),
+                        ),
+                        SizedBox(width: 20.w),
+                        Expanded(
+                          flex: 2,
+                          child: AppButton(
+                            onPress: () {
+                              Navigator.pushReplacementNamed(
+                                  context, '/register_screen');
+                            },
+                            text: 'اشتراك',
+                            textColor: Colors.white,
+                            buttonColor: Colors.black,
+                          ),
+                        ),
+                        const Spacer(),
+                      ],
+                    ),
+                  ],
                 ),
               ),
-              SizedBox(width: 20.w),
-              Expanded(
-                flex: 2,
-                child: AppButton(
-                  onPress: () {
-                    Navigator.pushReplacementNamed(context, '/register_screen');
-                  },
-                  text: 'اشتراك',
-                  textColor: Colors.black,
-                  buttonColor: Colors.white,
-                ),
-              ),
-              const Spacer(),
-            ],
+            ),
           ),
         ],
       ),

@@ -6,6 +6,7 @@ import 'package:booklibrary/models/cart.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
 class Cart extends StatefulWidget {
@@ -45,127 +46,105 @@ class _CartState extends State<Cart> {
   Widget build(BuildContext context) {
     final readCartRef = database.child('cart');
 
-    return Scaffold(
-      backgroundColor: Color(0xffF2F2F2),
-      appBar: UsualAppBar(context, "Cart"),
-      body: Padding(
-        padding: const EdgeInsets.only(top: 10.0, bottom: 30.0),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image(image: AssetImage("images/swipeitem.png")),
-                Text(
-                  "swipe on an item to delete",
-                  style: TextStyle(fontSize: 10),
-                ),
-              ],
-            ),
-            Expanded(
-              child: Container(
-                alignment: Alignment.center,
-                child: ListView.builder(
-                  itemCount: cartFoodList.length,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      margin:
-                      EdgeInsets.only(left: 30.0, right: 30.0, top: 30.0),
-                      child: Container(
-                        width: 315,
-                        height: 102,
-                        child: Slidable(
-                          endActionPane: ActionPane(children: [
-
-                            SlidableAction(
-                              backgroundColor: Colors.transparent,
-                              foregroundColor: Color(0xffDF2C2C),
-                              icon: Icons.delete,
-                              onPressed: (context) {
-                                deleteFromDatabase(
-                                    database, cartFoodList[index]);
-                              },
-                            ),
-                          ], motion: ScrollMotion()),
-                          child: Card(
-                            elevation: 0.0,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30.0),
-                            ),
-                            child: Stack(
-                              children: [
-                                Positioned(
-                                  left: 10,
-                                  top: 10,
-                                  child: Image(
-                                    image: NetworkImage(
-                                        cartFoodList[index].imagepath!),
-                                    height: 100,
-                                    width: 100,
-                                  ),
-                                ),
-                                Positioned(
-                                  left: 120,
-                                  top: 10,
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 10.0, bottom: 10.0),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          cartFoodList[index].name.toString(),
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 17),
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Text(
-                                          cartFoodList[index].price.toString(),
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 15,
-                                              color: Color(0xffFA4A0C)),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                Positioned(
-                                    right: 20,
-                                    bottom: 10,
-                                    child: ItemPropotion(cartFoodList[index])),
-                              ],
-                            ),
+    return Padding(
+      padding: const EdgeInsets.only(top: 10.0, bottom: 30.0),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image(image: AssetImage("images/swipeitem.png")),
+              Text(
+                "اسحب العنصر لتقوم بحذفه ",
+                style: TextStyle(fontSize: 10),
+              ),
+            ],
+          ),
+          Expanded(
+            child: Container(
+              alignment: Alignment.center,
+              child: ListView.builder(
+                itemCount: cartFoodList.length,
+                itemBuilder: (context, index) {
+                  return Container(
+                    margin: EdgeInsets.only(left: 30.0, right: 30.0, top: 30.0),
+                    child: Slidable(
+                      endActionPane: ActionPane(
+                        motion: ScrollMotion(),
+                        children: [
+                          SlidableAction(
+                            backgroundColor: Colors.transparent,
+                            foregroundColor: Color(0xffDF2C2C),
+                            icon: Icons.delete,
+                            onPressed: (context) {
+                              deleteFromDatabase(database, cartFoodList[index]);
+                            },
                           ),
+                        ],
+                      ),
+                      child: Card(
+                        elevation: 2,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.r),
+                        ),
+                        child: Row(
+                          children: [
+                            Image(
+                              image:
+                              NetworkImage(cartFoodList[index].imagepath!),
+                              height: 100,
+                              width: 100,
+                            ),
+                            Expanded(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    cartFoodList[index].name.toString(),
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 17),
+                                  ),
+                                  Text(
+                                    '₪'+ cartFoodList[index].price.toString(),
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 15,
+                                        color: Color(0xffFA4A0C)),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(width: 10.w),
+                            ItemPropotion(cartFoodList[index]),
+                            SizedBox(width: 10.w),
+                          ],
                         ),
                       ),
-                    );
-                  },
-                ),
+                    ),
+                  );
+                },
               ),
             ),
-            TextButton(
-              onPressed: () {},
-              child: Container(
-                alignment: Alignment.center,
-                height: 60,
-                width: 300,
-                decoration: BoxDecoration(
-                  color: Color(0xffFA4A0C),
-                  borderRadius: BorderRadius.circular(25.0),
-                ),
-                child: Text(
-                  "Complete Order",
-                  style: TextStyle(color: Colors.white, fontSize: 17),
-                ),
+          ),
+          TextButton(
+            onPressed: () {},
+            child: Container(
+              alignment: Alignment.center,
+              height: 60,
+              width: 300,
+              decoration: BoxDecoration(
+                color: Color(0xffFA4A0C),
+                borderRadius: BorderRadius.circular(25.0),
+              ),
+              child: Text(
+                "تابع طلب الشراء",
+                style: TextStyle(color: Colors.white, fontSize: 17),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

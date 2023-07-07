@@ -103,7 +103,6 @@ class _UpdateRecordState extends State<UpdateRecord> {
                 fillColor: Colors.white,
                 hintText: 'Number',
               ),
-              maxLength: 10,
             ),
             SizedBox(
               height: 20,
