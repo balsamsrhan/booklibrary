@@ -1,8 +1,11 @@
 import 'dart:convert';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import '../Shared_Pref/Shard_Pref_Controller.dart';
 import '../models/cart.dart';
 
 class Favourites extends StatefulWidget {
@@ -15,6 +18,9 @@ class Favourites extends StatefulWidget {
 class _FavouritesState extends State<Favourites> {
   final database = FirebaseDatabase.instance.ref();
    List<CartBook> favouritesList = [];
+  late String uuid;
+  DatabaseReference db_Ref =
+  FirebaseDatabase.instance.ref().child('favourites');
   // @override
   // final _bookService = BookService2();
   //
@@ -22,6 +28,7 @@ class _FavouritesState extends State<Favourites> {
   void initState() {
     super.initState();
 _activateListeners();
+    uuid = SharedPrefController().getUserID()!;
   }
 
   void _activateListeners() {
@@ -61,78 +68,78 @@ _activateListeners();
           children: [
             Expanded(
               child: Container(
-                alignment: Alignment.center,
-                child: ListView.builder(
-                  itemCount: favouritesList.length,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      margin:
-                      EdgeInsets.only(left: 30.0, right: 30.0, top: 30.0),
+           //     alignment: Alignment.center,
+               child: FirebaseAnimatedList(
+                  query: db_Ref,
+                  shrinkWrap: true,
+                  itemBuilder: (context, snapshot, animation, index) {
+                    Map Contact = snapshot.value as Map;
+                    Contact['key'] = snapshot.key;
+                    print("db_Ref.child('id_user'): ${Contact['id_user']}");
+
+                    return uuid == Contact['id_user']
+                        ? GestureDetector(
+                    child: Container(
+                      margin: EdgeInsets.only(left: 30.0, right: 30.0, top: 30.0),
                       child: Slidable(
-                        endActionPane: ActionPane(children: [
-                          SlidableAction(
-                            autoClose: true,
-                            backgroundColor: Colors.transparent,
-                            foregroundColor: Color(0xffDF2C2C),
-                            icon: Icons.delete,
-                            onPressed: (context) {
-                              favouritesList[index].faved = false;
-                              deleteFromDatabase(
-                                  database, favouritesList[index]);
-                            },
+                    endActionPane: ActionPane(
+                    motion: ScrollMotion(),
+                      children: [
+                        SlidableAction(
+                          backgroundColor: Colors.transparent,
+                          foregroundColor: Color(0xffDF2C2C),
+                          icon: Icons.delete,
+                          onPressed: (context) {
+                            deleteFromDatabase(database, favouritesList[index]);
+                          },
+                        ),
+                      ],
+                    ),
+                        child: Card(
+                          elevation: 2,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30.r),
                           ),
-                        ], motion: ScrollMotion()),
-                        child: Container(
-                          width: 333,
-                          height: 102,
-                          child: InkWell(
-                            onTap: () {},
-                            child: Card(
-                              elevation: 2,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30.r),
+                          child: Row(
+                            children: [
+                              Image(
+                                image:
+                                NetworkImage(favouritesList[index].imagepath!),
+                                height: 100,
+                                width: 100,
                               ),
-                              child: Row(
-                                children: [
-                                  Image(
-                                    image:
-                                    NetworkImage(favouritesList[index].imagepath!),
-                                    height: 100,
-                                    width: 100,
-                                  ),
-                                  Expanded(
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          favouritesList[index].name.toString(),
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 20),
-                                        ),
-                                        Text(
-                                          '₪'+ favouritesList[index].price.toString(),
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 15,
-                                              color: Color(0xffFA4A0C)),
-                                        ),
-                                      ],
+                              Expanded(
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      favouritesList[index].name.toString(),
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 17),
                                     ),
-                                  ),
-                                  SizedBox(width: 10.w),
-                                 // ItemPropotion(favouritesList[index]),
-                                  SizedBox(width: 10.w),
-                                ],
+                                    Text(
+                                      '₪'+ favouritesList[index].price.toString(),
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 15,
+                                          color: Color(0xffFA4A0C)),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
+                             // SizedBox(width: 10.w),
+                             // ItemPropotion(favouritesList[index]),
+                              //SizedBox(width: 10.w),
+                            ],
                           ),
                         ),
                       ),
-                    );
+                    ),
+                    ) : const SizedBox();
                   },
-                ),
+               ),
               ),
             ),
           ],

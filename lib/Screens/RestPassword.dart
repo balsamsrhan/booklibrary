@@ -65,7 +65,7 @@ class _ResetScreenState extends State<ResetScreen> {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (_) => ProfileScreen(),
+                      builder: (_) => ProfileScreen2(),
                     ),
                   );
                 },

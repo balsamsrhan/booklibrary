@@ -1,4 +1,5 @@
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 class CartBook {
@@ -12,6 +13,7 @@ class CartBook {
 
   CartBook(
       this.id, this.imagepath, this.name, this.price, this.count, this.faved);
+  FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   CartBook.fromJson(Map<String, dynamic> json) {
     id = json['key'];
@@ -25,6 +27,7 @@ class CartBook {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['key'] = id;
+    data['id-user'] = _firebaseAuth.currentUser!.uid;
     data['image'] = imagepath;
     data['name'] = name;
     data['price'] = price;
@@ -57,6 +60,7 @@ class BookService2 {
           price,
           count,
           faved,
+
       );
     }).toList();
 

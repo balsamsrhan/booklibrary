@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,18 +7,23 @@ import 'package:google_fonts/google_fonts.dart';
 import '../models/bokdemo.dart';
 class Detailsf extends StatefulWidget {
   Bookhome selectedBook;
-
+  late String uuid;
   Detailsf({Key? key, required this.selectedBook}) : super(key: key);
 
   @override
   _DetailsfState createState() => _DetailsfState();
 }
 
+
 class _DetailsfState extends State<Detailsf> {
   final database = FirebaseDatabase.instance.ref();
+  FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   bool faved = false;
 
-
+@override
+  void initState() {
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     final ref = database.child('cart');
@@ -162,6 +168,7 @@ return Scaffold(
                                   'price': widget.selectedBook.price,
                                   'image': widget.selectedBook.imageUrl,
                                   'count': 1,
+                                  'id_user' : _firebaseAuth.currentUser!.uid
                                 };
                                 String? key;
                                 await database
@@ -229,6 +236,7 @@ return Scaffold(
                                 'name': widget.selectedBook.name,
                                 'price': widget.selectedBook.price,
                                 'image': widget.selectedBook.imageUrl,
+                                'id_user' : _firebaseAuth.currentUser!.uid
                               };
                               String? key;
                               await database

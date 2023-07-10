@@ -3,6 +3,8 @@ import 'package:booklibrary/models/bokdemo.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 
 class DetailsBookUser extends StatefulWidget {
@@ -15,6 +17,9 @@ class DetailsBookUser extends StatefulWidget {
 class _DetailsBookUserState extends State<DetailsBookUser> {
   final database = FirebaseDatabase.instance.ref();
   bool faved = false;
+  var phone = "";
+  var msg = "";
+  var code = "+970";
   @override
   Widget build(BuildContext context) {
     final ref = database.child('cart');
@@ -142,12 +147,35 @@ class _DetailsBookUserState extends State<DetailsBookUser> {
                   SizedBox(
                     height: 10,
                   ),
-                  Text(
-                    widget.selectedBook.phone,
-                    style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 22,
-                        color: Color(0xffFA4A0C)),
+                  TextButton(
+                    style: TextButton.styleFrom(
+                      textStyle: const TextStyle(fontSize: 20),
+                    ),
+                    onPressed: () async {
+                      // https://wa.me/1XXXXXXXXXX?text=I'm%20interested%20in%20your%20car%20for%20sale
+
+                      if (phone.length < 10) {
+                        Fluttertoast.showToast(
+                            msg: "Enter a valid phone number",
+                            toastLength: Toast.LENGTH_LONG,
+                            gravity: ToastGravity.BOTTOM,
+                            timeInSecForIosWeb: 2,
+                            backgroundColor: Colors.red,
+                            textColor: Colors.white,
+                            webPosition: "center",
+                            fontSize: 16.0);
+                      } else {
+                        code = code.replaceAll("+", "");
+
+                        var url = "https://wa.me/594884151?";
+                        if (await canLaunch(url)) {
+                          await launch(url);
+                        } else {
+                          throw "Could not launch $url";
+                        }
+                        // print(code);
+                      }
+                    }, child: Text('data'),
                   ),
                 ],
               ),
@@ -301,7 +329,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 import '../models/bokdemo.dart';
-import 'order_screen.dart';
+import 'Order_Screen.dart';
 
 class DetailsPage extends StatefulWidget {
   Boo selectedFood;

@@ -44,6 +44,18 @@ class _MyBookUserState extends State<MyBookUser> {
     DatabaseReference db_Ref =
     FirebaseDatabase.instance.ref().child('Book_user');
     return Scaffold(
+      appBar: AppBar(
+        title: IconButton(
+          // Your drawer Icon
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: Colors.black,
+          ),
+        ),
+      ),
       body: FirebaseAnimatedList(
         query: db_Ref,
         shrinkWrap: true,
@@ -76,7 +88,15 @@ class _MyBookUserState extends State<MyBookUser> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   tileColor: Colors.grey[300],
-
+                  trailing: IconButton(
+                    icon: Icon(
+                      Icons.delete,
+                      color: Colors.red[900],
+                    ),
+                    onPressed: () {
+                      db_Ref.child(Contact['key']).remove();
+                    },
+                  ),
                   leading: CircleAvatar(
                     backgroundImage: NetworkImage(
                       Contact['url'],

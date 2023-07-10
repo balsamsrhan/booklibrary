@@ -1,3 +1,4 @@
+import 'package:booklibrary/auth/PhoneAuth.dart';
 import 'package:booklibrary/models/Helpers.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -6,9 +7,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../Firebase/fb_cotroller_auth.dart';
+import '../Screens/constants.dart';
 import '../Screens/phone.dart';
 import '../widgtes/app_button.dart';
 import '../widgtes/app_text_field.dart';
+import '../widgtes/components/custom_surfix_icon.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -43,7 +46,26 @@ class _LoginScreenState extends State<LoginScreen> with Helpers {
     _passwordController.dispose();
     super.dispose();
   }
+  final _formKey = GlobalKey<FormState>();
+  String? email;
+  String? password;
+  String? conform_password;
+  bool remember = false;
+  final List<String?> errors = [];
 
+  void addError({String? error}) {
+    if (!errors.contains(error))
+      setState(() {
+        errors.add(error);
+      });
+  }
+
+  void removeError({String? error}) {
+    if (errors.contains(error))
+      setState(() {
+        errors.remove(error);
+      });
+  }
   bool obscure = true;
 
   @override
@@ -57,7 +79,7 @@ class _LoginScreenState extends State<LoginScreen> with Helpers {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.w),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(height: 30.h),
                   Text(
@@ -82,26 +104,49 @@ class _LoginScreenState extends State<LoginScreen> with Helpers {
             ),
             Expanded(
               child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(50.r),
-                    topRight: Radius.circular(50.r),
-                  ),
-                ),
+                // decoration: BoxDecoration(
+                //   color: Colors.white,
+                //   borderRadius: BorderRadius.only(
+                //     topLeft: Radius.circular(50.r),
+                //     topRight: Radius.circular(50.r),
+                //   ),
+                // ),
                 child: ListView(
                   padding: EdgeInsets.symmetric(horizontal: 16.w),
                   children: [
                     SizedBox(height: 40.h),
-                    AppTextField(
-                      textEditingController: _emailController,
-                      hintText: 'أدخل عنوان البريد الالكتروني',
-                      prefixIcon: Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: SvgPicture.asset('images/email.svg'),
-                      ),
-                      keyboardType: TextInputType.emailAddress,
+                AppTextField(
+
+                //  focusColor: Colors.white,
+                    //add prefix icon
+                    prefixIcon: Icon(
+                      Icons.person_outline_rounded,
+                      color: Colors.grey,
                     ),
+
+
+                    hintText: "البريد الالكتروني",
+
+                    //make hint text
+                    // hintStyle: TextStyle(
+                    //   color: Colors.grey,
+                    //   fontSize: 16,
+                    //   fontFamily: "verdana_regular",
+                    //   fontWeight: FontWeight.w400,
+                    // ),
+                  keyboardType: TextInputType.emailAddress,
+                  textEditingController: _emailController,
+                    //create lable
+                    labelText: 'البريد الالكتروني',
+                    //lable style
+                    // labelStyle: TextStyle(
+                    //   color: Colors.grey,
+                    //   fontSize: 16,
+                    //   fontFamily: "verdana_regular",
+                    //   fontWeight: FontWeight.w400,
+                    // ),
+                  ),
+
                     SizedBox(height: 20.h),
                     AppTextField(
                       prefixIcon: Padding(
@@ -110,6 +155,7 @@ class _LoginScreenState extends State<LoginScreen> with Helpers {
                       ),
                       textEditingController: _passwordController,
                       hintText: 'أدخل كلمة المرور',
+                      labelText: 'كلمة المرور',
                       keyboardType: TextInputType.phone,
                       obscure: obscure,
                       suffixIcon: IconButton(
@@ -143,15 +189,15 @@ class _LoginScreenState extends State<LoginScreen> with Helpers {
                     ),
                     SizedBox(height: 30.h),
                     Card(
-                      elevation: 8,
+                      elevation: 10,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15.r),
+                        borderRadius: BorderRadius.circular(50.r),
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           SvgPicture.asset('images/google.svg'),
-                          SizedBox(width: 10.w),
+                          SizedBox(width: 15.w , height: 10.h),
                           TextButton(
                             onPressed: () {
                               Navigator.push(
@@ -176,16 +222,20 @@ class _LoginScreenState extends State<LoginScreen> with Helpers {
                     ),
                     SizedBox(height: 25.h),
                     Card(
-                      elevation: 8,
+                      elevation: 10,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15.r),
+                        borderRadius: BorderRadius.circular(50.r),
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           SvgPicture.asset('images/call.svg'),
                           SizedBox(width: 10.w),
-                          Text(
+                          TextButton(
+                            onPressed: () {
+                             Navigator.of(context).push(MaterialPageRoute(builder: (context) => Phones()));
+                            },
+                            child:Text(
                             'قم بتسجيل الدخول باستخدام رقم الهاتف',
                             textAlign: TextAlign.center,
                             style: GoogleFonts.poppins(
@@ -193,6 +243,7 @@ class _LoginScreenState extends State<LoginScreen> with Helpers {
                               fontWeight: FontWeight.w500,
                               color: Colors.black,
                             ),
+                          ),
                           ),
                         ],
                       ),

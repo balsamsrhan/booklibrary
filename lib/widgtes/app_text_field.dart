@@ -32,7 +32,7 @@ class AppTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
       maxLines: maxline,
       onChanged: onChange,
       obscureText: obscure,
@@ -41,34 +41,41 @@ class AppTextField extends StatelessWidget {
       style: GoogleFonts.poppins(),
       decoration: InputDecoration(
         filled: true,
-        fillColor: const Color(0XFFF4F2F2),
+        fillColor: Colors.white,
+        focusColor: Colors.white,
         suffixIcon: suffixIcon,
         prefixIcon: prefixIcon,
         label: labelText != null ? Text(labelText!) : null,
         labelStyle: GoogleFonts.poppins(
-          fontSize: 15.sp,
+          fontSize: 16.sp,
           fontWeight: FontWeight.w400,
           color: Colors.black,
         ),
+
         hintText: hintText,
         hintStyle: GoogleFonts.poppins(
-          fontSize: 13.sp,
+          fontSize: 16.sp,
           fontWeight: FontWeight.w300,
           color: Colors.black,
         ),
-        helperStyle: GoogleFonts.poppins(fontSize: 15.sp),
+        helperStyle: GoogleFonts.poppins(fontSize: 16.sp),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(50.r),
-          borderSide: BorderSide(color: Colors.black, width: 1.0.w),
+          borderRadius: BorderRadius.circular(50.0),
         ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(50.r),
-          borderSide: BorderSide(color:  Colors.black, width: 1.0.w),
+
+        focusedBorder: OutlineInputBorder(
+          borderSide:
+          const BorderSide(color: Colors.black, width: 1.0),
+          borderRadius: BorderRadius.circular(50.0),
         ),
-        disabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(50.r),
-          borderSide: BorderSide(color:  Colors.black, width: 1.0.w),
-        ),
+        // enabledBorder: OutlineInputBorder(
+        //   borderRadius: BorderRadius.circular(50.r),
+        //   borderSide: BorderSide(color:  Colors.black, width: 1.0.w),
+        // ),
+        // disabledBorder: OutlineInputBorder(
+        //   borderRadius: BorderRadius.circular(50.r),
+        //   borderSide: BorderSide(color:  Colors.black, width: 1.0.w),
+        // ),
       ),
     );
   }

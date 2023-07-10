@@ -10,14 +10,14 @@ import 'package:google_fonts/google_fonts.dart';
 import '../auth/login_screen.dart';
 import 'RestPassword.dart';
 
-class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+class ProfileScreen2 extends StatefulWidget {
+  const ProfileScreen2({Key? key}) : super(key: key);
 
   @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
+  State<ProfileScreen2> createState() => _ProfileScreen2State();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class _ProfileScreen2State extends State<ProfileScreen2> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

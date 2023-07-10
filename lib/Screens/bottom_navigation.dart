@@ -1,12 +1,13 @@
 import 'package:booklibrary/Screens/FavouritBook.dart';
-import 'package:booklibrary/Screens/order_screen.dart';
+import 'package:booklibrary/Screens/Order_Screen.dart';
+import 'package:booklibrary/Screens/profile/profile_screen.dart';
 import 'package:flashy_tab_bar2/flashy_tab_bar2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../models/bn_screen.dart';
 import 'ItemListBook.dart';
 import 'Profile_Screen.dart';
-import 'home_page.dart';
+import 'Home_Page.dart';
 class BottomNavigationScreen extends StatefulWidget {
   const BottomNavigationScreen({Key? key}) : super(key: key);
 

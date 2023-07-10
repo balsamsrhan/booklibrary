@@ -1,7 +1,9 @@
+import 'dart:async';
+
 import 'package:booklibrary/Screens/CategoryScreen.dart';
 import 'package:booklibrary/Screens/DetailesDemo.dart';
 import 'package:booklibrary/Screens/DetailsScreen.dart';
-import 'package:booklibrary/Screens/order_screen.dart';
+import 'package:booklibrary/Screens/Order_Screen.dart';
 import 'package:booklibrary/models/add_book_user.dart';
 import 'package:booklibrary/models/bokdemo.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -12,7 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../models/Category.dart';
-import 'DetailsBookCategory.dart';
+import 'BookCategory.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -24,7 +26,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   List<Bookhome> _books = [];
   List<Categ> _categories = [];
-
   final _categoriesService = CategService();
   @override
   final _bookService = BookService();
@@ -40,15 +41,16 @@ class _HomeScreenState extends State<HomeScreen> {
         _books = books;
       });
     });
-    f();
+    FunCategory();
   }
-  void f(){
+  void FunCategory(){
     _categoriesService.getCategories().then((categories) {
       setState(() {
         _categories = categories;
       });
     });
   }
+
   @override
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
@@ -56,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
         key: scaffoldkey,
         resizeToAvoidBottomInset: false,
-        backgroundColor: Color(0xffF2F2F2),
+        backgroundColor: Colors.white,
     //drawer: CustomDrawer(),
     appBar: AppBar(
     titleSpacing: 0.0,
@@ -75,7 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
     child: IconButton(
     onPressed: () {
     Navigator.push(
-    context, MaterialPageRoute(builder: (context) => Cart()));
+    context, MaterialPageRoute(builder: (context) => BookCategory()));
     },
     icon: Image(
     image: AssetImage("images/shopping-cart.png"),
@@ -108,7 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
     width: MediaQuery.of(context).size.width - 80,
     height: 50,
     child: TextFormField(
-    cursorColor: Colors.black,
+      cursorColor: Colors.black,
     autofocus: false,
     decoration: InputDecoration(
     filled: true,
@@ -117,7 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
     child: ImageIcon(AssetImage("images/searchicon.png"),
     color: Colors.black),
     ),
-    fillColor: Colors.white,
+    fillColor: Colors.grey[200],
     focusedBorder: OutlineInputBorder(
     borderSide: BorderSide(color: Colors.transparent),
     borderRadius: BorderRadius.circular(25.7),
@@ -141,7 +143,53 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-
+      Container(
+          height: 70,
+          //color: Colors.grey,
+          child : _categories != null
+              ? ListView.builder(
+            padding: const EdgeInsets.all(10.0),
+            itemCount: _categories.length,
+            // gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            //   crossAxisCount: 2,
+            //   childAspectRatio: 0.9,
+            // ),
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (context, index) {
+              return GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          BooksScreenCategory(
+                              idCategory: _categories[index].id.toString()),
+                    ),
+                  );
+                },
+                child: Card(
+                  elevation: 4.0,
+                  shape: RoundedRectangleBorder(
+                      borderRadius:
+                      BorderRadius.circular(30.0)),
+                  child: Container(child: Text(_categories[index].name,
+                    style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold
+                    ),
+                  ),
+                    width: 100,
+                    margin: EdgeInsets.all(10),
+                    alignment: Alignment.center,
+                  ),
+                  color: Colors.grey[200],
+                ),
+              );
+            },
+          )
+              : const Center(
+            child: CircularProgressIndicator(),
+          )),
             //Code عرض الكاتيجوري
 
 /*     Container(
@@ -236,6 +284,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                   height: 130,
                                 ),
                                 SizedBox(
+                                  height: 20,
+                                   child: Image(
+                                     image: AssetImage(_books[index].imageUrl),
+                                   ),
+                                ),
+                                SizedBox(
                                   width: 160,
                                   child: Text(_books[index].name,
                                       textAlign: TextAlign.center,
@@ -289,13 +343,13 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                         ),
-                      //  Positioned(
-                        //   top: -30,
-                        //   left: -12,
-                        //   child: Image(
-                        //     image: AssetImage(_books[index].imageUrl),
-                        //   ),
-                        // ),
+                       // Positioned(
+                       //    top: -30,
+                       //    left: -12,
+                       //    child: Image(
+                       //      image: AssetImage(_books[index].imageUrl),
+                       //    ),
+                       //  ),
                       ],
                     ),
                   );
@@ -315,7 +369,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ],
     ),
     ),
-    );
+      );
   }
 }
     // return _books != null

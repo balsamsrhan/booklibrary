@@ -1,13 +1,16 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'dart:convert';
-
 import 'package:booklibrary/models/cart.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+
+import '../Shared_Pref/Shard_Pref_Controller.dart';
+import 'OrderCompleted.dart';
 
 class Cart extends StatefulWidget {
   const Cart({Key? key}) : super(key: key);
@@ -18,11 +21,15 @@ class Cart extends StatefulWidget {
 
 class _CartState extends State<Cart> {
   final database = FirebaseDatabase.instance.ref();
+  late String uuid;
+  DatabaseReference db_Ref =
+  FirebaseDatabase.instance.ref().child('cart');
 
   @override
   void initState() {
     super.initState();
     _activateListeners();
+    uuid = SharedPrefController().getUserID()!;
   }
 
   List<CartBook> cartFoodList = [];
@@ -62,11 +69,17 @@ class _CartState extends State<Cart> {
           ),
           Expanded(
             child: Container(
-              alignment: Alignment.center,
-              child: ListView.builder(
-                itemCount: cartFoodList.length,
-                itemBuilder: (context, index) {
-                  return Container(
+              child: FirebaseAnimatedList(
+                query: db_Ref,
+                shrinkWrap: true,
+                itemBuilder: (context, snapshot, animation, index) {
+                  Map Contact = snapshot.value as Map;
+                  Contact['key'] = snapshot.key;
+                  print("db_Ref.child('id_user'): ${Contact['id_user']}");
+
+                  return uuid == Contact['id_user']
+                      ? GestureDetector(
+                  child: Container(
                     margin: EdgeInsets.only(left: 30.0, right: 30.0, top: 30.0),
                     child: Slidable(
                       endActionPane: ActionPane(
@@ -123,13 +136,17 @@ class _CartState extends State<Cart> {
                         ),
                       ),
                     ),
-                  );
+                  ),
+                  ) : const SizedBox();
                 },
               ),
             ),
           ),
           TextButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => OrderCompleted()));
+            },
             child: Container(
               alignment: Alignment.center,
               height: 60,

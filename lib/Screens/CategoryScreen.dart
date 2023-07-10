@@ -1,29 +1,31 @@
 import 'package:booklibrary/Screens/DetailsScreen.dart';
-import 'package:booklibrary/models/add_book_user.dart';
-import 'package:booklibrary/models/bokdemo.dart';
-import 'package:booklibrary/models/category.dart';
-import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 
-import 'DetailsBookCategory.dart';
+import '../models/bokdemo.dart';
 
-class CategoryScreen extends StatefulWidget {
-  const CategoryScreen({Key? key}) : super(key: key);
+class BooksScreenCategory extends StatefulWidget {
+  final String idCategory;
+  const BooksScreenCategory({super.key, required this.idCategory});
 
   @override
-  _CategoryScreenState createState() => _CategoryScreenState();
+  State<BooksScreenCategory> createState() => _BooksScreenCategoryState();
 }
 
-class _CategoryScreenState extends State<CategoryScreen> {
-  List<Categ> _categories = [];
-
-  final _categoriesService = CategService();
+class _BooksScreenCategoryState extends State<BooksScreenCategory> {
+  List<Bookhome> _books = [];
+  final _bookService = BookService();
 
   @override
   void initState() {
     super.initState();
- //f();
+
+    _bookService.getBooks().then((books) {
+      final filteredBooks =
+      books.where((book) => book.book_category == widget.idCategory).toList();
+      setState(() {
+        _books = filteredBooks;
+      });
+    });
   }
 
   @override
@@ -33,71 +35,53 @@ class _CategoryScreenState extends State<CategoryScreen> {
           title: const Text('متجر الكتب'),
           elevation: 0.0,
         ),
-        body:Container(
-       child: _categories != null
-            ? ListView.builder(
-          shrinkWrap: true,
+        body: _books != null
+            ? GridView.builder(
           padding: const EdgeInsets.all(10.0),
-          itemCount: _categories.length,
-          scrollDirection: Axis.horizontal,
-          physics: const ClampingScrollPhysics(),
-          // gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          //   crossAxisCount: 2,
-          //   childAspectRatio: 0.9,
-          // ),
+          itemCount: _books.length,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            childAspectRatio: 0.9,
+          ),
           itemBuilder: (context, index) {
             return GestureDetector(
               onTap: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => BooksScreen(
-                        idCategory: _categories[index].id.toString()),
+                    builder: (context) => DetailsPage(selectedBook: _books[index]),
                   ),
                 );
               },
-              child: Row(
-                children: [
-                  new Row(children: [
-                    ElevatedButton(
-                      child:  Text(_categories[index].name),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => BooksScreen(
-                                idCategory: _categories[index].id.toString()),
-                          ),
-                        );
-                      },
+              child: Card(
+                child: Column(
+                  children: [
+                    Image.network(
+                      _books[index].imageUrl,
+                      height: 50,
+                      width: 60,
                     ),
-                  ])
-                ],
+                    Text(_books[index].name),
+                    Text(_books[index].auther),
+                  ],
+                ),
               ),
-              // child: Card(
-              //   child: Center(child: Text(_categories[index].name)),
-              // ),
             );
           },
         )
             : const Center(
           child: CircularProgressIndicator(),
-        )
-        )
-    );
+        ));
   }
-
-// SizedBox(
-//   height: 100,
-//   child: ListView.builder(
-//     scrollDirection: Axis.horizontal,
-//     itemCount: _categories.length,
-//     itemBuilder: ((context, index) {
-//       return Padding(
-//         padding: const EdgeInsets.only(left: 8.0),
-//         child: Chip(label: Text("${_categories[index].name}")),
-//       );
-//     }),
-//   ),
-// ),
 }
+
+/*
+
+Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              DetailsScreen(_books[index]),
+                        ),
+                      );
+*/
