@@ -5,8 +5,8 @@ import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import '../Shared_Pref/Shard_Pref_Controller.dart';
-import '../models/cart.dart';
+import '../../Shared_Pref/Shard_Pref_Controller.dart';
+import '../../models/Cart.dart';
 
 class Favourites extends StatefulWidget {
   const Favourites({Key? key}) : super(key: key);
@@ -96,6 +96,7 @@ _activateListeners();
                       ],
                     ),
                         child: Card(
+                          color: Colors.grey[200],
                           elevation: 2,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30.r),

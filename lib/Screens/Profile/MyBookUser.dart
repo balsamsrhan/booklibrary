@@ -1,13 +1,13 @@
-import 'package:booklibrary/Screens/update.dart';
+import 'package:booklibrary/Screens/SecondeHandBooks/UpdateSecondHandBook.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../Shared_Pref/Shard_Pref_Controller.dart';
-import '../models/add_book_user.dart';
-import 'addBook.dart';
+import '../../Shared_Pref/Shard_Pref_Controller.dart';
+import '../../models/Seconde_HandBooks.dart';
+import '../SecondeHandBooks/AddSecondHandeBooks.dart';
 
 class MyBookUser extends StatefulWidget {
   const MyBookUser({Key? key}) : super(key: key);

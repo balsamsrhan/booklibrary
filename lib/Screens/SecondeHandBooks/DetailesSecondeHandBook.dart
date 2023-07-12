@@ -1,5 +1,5 @@
-import 'package:booklibrary/models/add_book_user.dart';
-import 'package:booklibrary/models/bokdemo.dart';
+import 'package:booklibrary/models/Seconde_HandBooks.dart';
+import 'package:booklibrary/models/Books.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -328,7 +328,7 @@ class _DetailsBookUserState extends State<DetailsBookUser> {
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
-import '../models/bokdemo.dart';
+import '../models/Books.dart';
 import 'Order_Screen.dart';
 
 class DetailsPage extends StatefulWidget {

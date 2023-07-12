@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
 import '../../../auth/login_screen.dart';
-import '../../MyBookUser.dart';
-import '../../UpdateProfile.dart';
+import '../../Profile/AddressScreen.dart';
+import '../MyBookUser.dart';
+import '../UpdateProfile.dart';
 import 'profile_menu.dart';
 import 'profile_pic.dart';
 
@@ -29,12 +29,14 @@ class Body extends StatelessWidget {
             text: "العنوان",
             icon: "images/Location point.svg",
             press: () {
-
+              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context){
+                return  MyAdress();
+              }));
             },
           ),
           ProfileMenu(
             text: "كتبي",
-            icon: "images/book.png",
+            icon: "images/book.svg",
             press: () {
               Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context){
                 return  MyBookUser();
@@ -43,7 +45,7 @@ class Body extends StatelessWidget {
           ),
           ProfileMenu(
             text: "تسجيل خروج",
-            icon: "images/logout.png",
+            icon: "images/log out.svg",
             press: () {
               FirebaseAuth.instance.signOut().then((value){
                 Navigator.push(context,MaterialPageRoute(builder: (context){

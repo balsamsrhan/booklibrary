@@ -1,6 +1,7 @@
-import 'package:booklibrary/Screens/Profile_Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
+import '../profile/profile_screen.dart';
 
 
 class ResetScreen extends StatefulWidget {
@@ -65,7 +66,7 @@ class _ResetScreenState extends State<ResetScreen> {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (_) => ProfileScreen2(),
+                      builder: (_) => ProfileScreen(),
                     ),
                   );
                 },

@@ -1,9 +1,9 @@
-import 'package:booklibrary/Screens/DetailesBookUser.dart';
+import 'package:booklibrary/Screens/SecondeHandBooks/DetailesSecondeHandBook.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../models/add_book_user.dart';
-import 'addBook.dart';
+import '../../models/Seconde_HandBooks.dart';
+import 'AddSecondHandeBooks.dart';
 
 class ItemList extends StatefulWidget {
   const ItemList({Key? key}) : super(key: key);
@@ -96,8 +96,10 @@ class _ItemListState extends State<ItemList> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Expanded(
-                        child: Image.network(
-                          _books[index].image, fit: BoxFit.contain,),
+                        child:  ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: Image.network(_books[index].image,width: 150,),
+                        ),
                       ),
                       Text(_books[index].name,textAlign: TextAlign.center,),
                       Text(_books[index].auther),
@@ -286,7 +288,7 @@ class _ItemListState extends State<ItemList> {
   }
 }
 *//*
-import 'package:booklibrary/Screens/addBook.dart';
+import 'package:booklibrary/Screens/AddSecondHandeBooks.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 

@@ -7,11 +7,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../Firebase/fb_cotroller_auth.dart';
-import '../Screens/constants.dart';
-import '../Screens/phone.dart';
 import '../widgtes/app_button.dart';
 import '../widgtes/app_text_field.dart';
-import '../widgtes/components/custom_surfix_icon.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -200,12 +197,12 @@ class _LoginScreenState extends State<LoginScreen> with Helpers {
                           SizedBox(width: 15.w , height: 10.h),
                           TextButton(
                             onPressed: () {
-                              Navigator.push(
+                            /*  Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (_) => LoginPage(),
                                 ),
-                              );
+                              );*/
                             },
                             child: Text(
                               'قم بتسجيل الدخول باستخدام جوجل',

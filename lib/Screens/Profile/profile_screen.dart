@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import '../coustom_bottom_nav_bar.dart';
-import '../enums.dart';
 import 'components/body.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -16,7 +14,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Body(),
-     // bottomNavigationBar: CustomBottomNavBar(selectedMenu: MenuState.profile),
     );
   }
 }

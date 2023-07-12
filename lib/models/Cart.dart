@@ -36,7 +36,32 @@ class CartBook {
     throw (0);
   }
 
+  Future<Map<String, dynamic>> calculateCartTotal() async {
+    final DatabaseReference _database = FirebaseDatabase.instance.reference().child('cart');
 
+    // Retrieve the cart data from Firebase
+    final DatabaseEvent databaseEvent = await _database.once();
+
+    double totalPrice = 0.0;
+    int totalQuantity = 0;
+
+    // Loop through each item in the cart
+     Map<dynamic, dynamic> cartItems =  databaseEvent.snapshot.value as Map;
+    cartItems.forEach((key, value) {
+      double price = value['price'];
+      int quantity = value['count'];
+
+      // Update the total price and total quantity
+      totalPrice += price * quantity;
+      totalQuantity += quantity;
+    });
+
+    // Return the calculated values
+    return {
+      'totalPrice': totalPrice,
+      'totalQuantity': totalQuantity,
+    };
+  }
 }
 class BookService2 {
   final DatabaseReference _database = FirebaseDatabase.instance.reference()

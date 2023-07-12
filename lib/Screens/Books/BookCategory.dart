@@ -1,12 +1,8 @@
-import 'package:booklibrary/Screens/DetailsScreen.dart';
-import 'package:booklibrary/models/add_book_user.dart';
-import 'package:booklibrary/models/bokdemo.dart';
+
 import 'package:booklibrary/models/category.dart';
-import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 
-import 'CategoryScreen.dart';
+import 'DetailsCategoryScreen.dart';
 
 class BookCategory extends StatefulWidget {
   const BookCategory({Key? key}) : super(key: key);

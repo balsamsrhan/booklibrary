@@ -6,12 +6,16 @@ class SizeConfig {
   static late double screenHeight;
   static double? defaultSize;
   static Orientation? orientation;
+  static double? blockH;
+  static double? blockV;
 
   void init(BuildContext context) {
     _mediaQueryData = MediaQuery.of(context);
     screenWidth = _mediaQueryData.size.width;
     screenHeight = _mediaQueryData.size.height;
     orientation = _mediaQueryData.orientation;
+    blockH = screenWidth! / 100;
+    blockV = screenHeight! / 100;
   }
 }
 

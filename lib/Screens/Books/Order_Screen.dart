@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'dart:convert';
-import 'package:booklibrary/models/cart.dart';
+import 'package:booklibrary/models/Cart.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/gestures.dart';
@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
-import '../Shared_Pref/Shard_Pref_Controller.dart';
+import '../../Shared_Pref/Shard_Pref_Controller.dart';
 import 'OrderCompleted.dart';
 
 class Cart extends StatefulWidget {
@@ -22,9 +22,10 @@ class Cart extends StatefulWidget {
 class _CartState extends State<Cart> {
   final database = FirebaseDatabase.instance.ref();
   late String uuid;
+   CartBook? cartBook;
   DatabaseReference db_Ref =
   FirebaseDatabase.instance.ref().child('cart');
-
+ double totalprice = 0;
   @override
   void initState() {
     super.initState();
@@ -96,6 +97,7 @@ class _CartState extends State<Cart> {
                         ],
                       ),
                       child: Card(
+                        color: Colors.grey[200],
                         elevation: 2,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30.r),
@@ -142,6 +144,23 @@ class _CartState extends State<Cart> {
               ),
             ),
           ),
+          Text(
+            'المجموع: ${cartBook!.calculateCartTotal().then((result) {
+              double totalPrice = result['totalPrice'];
+              int totalQuantity = result['totalQuantity'];
+
+              // Do something with the calculated values
+              print('Total Price: \$${totalPrice.toStringAsFixed(2)}');
+              print('Total Quantity: $totalQuantity');
+            }).catchError((error) {
+              // Handle any errors that occur during the calculation
+              print('Error calculating cart total: $error');
+            })}',
+            style: TextStyle(
+                fontWeight: FontWeight.w500,
+                fontSize: 15,
+                color: Color(0xffFA4A0C)),
+          ),
           TextButton(
             onPressed: () {
               Navigator.push(
@@ -152,7 +171,7 @@ class _CartState extends State<Cart> {
               height: 60,
               width: 300,
               decoration: BoxDecoration(
-                color: Color(0xffFA4A0C),
+                color: Color(0xFFBCAAA4),
                 borderRadius: BorderRadius.circular(25.0),
               ),
               child: Text(
@@ -327,7 +346,7 @@ import 'dart:convert';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import '../models/cart.dart';
+import '../models/Cart.dart';
 
 class Favourites extends StatefulWidget {
   const Favourites({Key? key}) : super(key: key);

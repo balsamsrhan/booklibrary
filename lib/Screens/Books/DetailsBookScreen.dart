@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../models/bokdemo.dart';
+import '../../models/Books.dart';
 class Detailsf extends StatefulWidget {
   Bookhome selectedBook;
   late String uuid;
@@ -36,6 +36,9 @@ return Scaffold(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children:[
             Padding(padding: EdgeInsets.only(left: 25),
             child: InkWell(
               onTap: (){
@@ -46,6 +49,79 @@ return Scaffold(
                 color: Colors.black,
               ),
             ),
+            ),
+            Container(
+              padding: EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                //color: Colors.black38,
+                borderRadius: BorderRadius.circular(18),
+              ),
+              child: IconButton(
+                onPressed: () async {
+                  try {
+                    final nextRef = <String, dynamic>{
+                      'name': widget.selectedBook.name,
+                      'price': widget.selectedBook.price,
+                      'image': widget.selectedBook.imageUrl,
+                      'id_user' : _firebaseAuth.currentUser!.uid
+                    };
+                    String? key;
+                    await database
+                        .child('favourites')
+                        .orderByChild('name')
+                        .equalTo(widget.selectedBook.name)
+                        .onChildAdded
+                        .listen((event) {
+                      setState(() {
+                        key = event.snapshot.key.toString();
+                      });
+                    }, onError: (Object o) {
+                      print(o.toString());
+                    });
+                    try {
+                      favRef
+                          .orderByChild('name')
+                          .equalTo(widget.selectedBook.name)
+                          .once()
+                          .then((value) => {
+                        if (value.snapshot.exists)
+                          {
+                            database
+                                .child('favourites')
+                                .child(key!)
+                                .remove(),
+                            setState(() {
+                              widget.selectedBook.fave =
+                              false;
+                            }),
+                          }
+                        else
+                          {
+                            database
+                                .child('favourites')
+                                .push()
+                                .set(nextRef),
+                            setState(() {
+                              widget.selectedBook.fave = true;
+                            }),
+                          }
+                      });
+                    } catch (e) {
+                      print(e.toString());
+                    }
+                  } catch (e) {
+                    print(e.toString());
+                  }
+                },
+                icon: ImageIcon(
+                  widget.selectedBook.fave
+                      ? const AssetImage("images/favicon.png")
+                      : const AssetImage("images/notfav_icon.png"),
+                  color: Colors.black,
+                ),
+              ),
+            ),
+            ],
             ),
             SizedBox(height: 50),
             Center(
@@ -60,13 +136,24 @@ return Scaffold(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'اسم الكتاب: ${widget.selectedBook.name}',
-                    style: GoogleFonts.poppins(
-                        fontWeight: FontWeight.w600, fontSize: 25),
+                  Column(
+                  children: [
+                    Text(
+                      "اسم الكتاب :",
+                      style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.w600, fontSize: 17),
+                    ),
+                    Text(
+                      widget.selectedBook.name,
+                      style: GoogleFonts.poppins(
+                        fontSize: 15,
+                      ),
+                    ),
+                  ],
                   ),
+
                   SizedBox(height: 25),
-                  Container(
+               /*   Container(
                     width: MediaQuery.of(context).size.width,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -103,30 +190,23 @@ return Scaffold(
                             ],
                           ),
                         ),
-                        Text(
-                            ' ₪ ${widget.selectedBook.price}',
-                          style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 18,
-                              color: Color(0xffFA4A0C)),
-                        ),
                       ],
                     ),
-                  ),
+                  ),*/
                   SizedBox(height: 20,),
-                  Row(
+                  Column(
                     children: [
-                      Text(
-                        "اسم المؤلف",
-                        style: GoogleFonts.poppins(
-                            fontWeight: FontWeight.w600, fontSize: 17),
-                      ),
-                      Text(
-                        widget.selectedBook.auther,
-                        style: GoogleFonts.poppins(
-                          fontSize: 15,
-                        ),
-                      ),
+                          Text(
+                            "اسم المؤلف",
+                            style: GoogleFonts.poppins(
+                                fontWeight: FontWeight.w600, fontSize: 17),
+                          ),
+                          Text(
+                            widget.selectedBook.auther,
+                            style: GoogleFonts.poppins(
+                              fontSize: 15,
+                            ),
+                          ),
                     ],
                   ),
                   SizedBox(height: 20,),
@@ -134,7 +214,7 @@ return Scaffold(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "الوصف",
+                        " الوصف :",
                         style: GoogleFonts.poppins(
                             fontWeight: FontWeight.w600, fontSize: 17),
                       ),
@@ -224,76 +304,15 @@ return Scaffold(
                             )),
                     ),
                     Container(
-                      padding: EdgeInsets.all(20),
-                      decoration: BoxDecoration(
-                        color: Colors.black38,
-                        borderRadius: BorderRadius.circular(18),
-                      ),
-                      child: IconButton(
-                          onPressed: () async {
-                            try {
-                              final nextRef = <String, dynamic>{
-                                'name': widget.selectedBook.name,
-                                'price': widget.selectedBook.price,
-                                'image': widget.selectedBook.imageUrl,
-                                'id_user' : _firebaseAuth.currentUser!.uid
-                              };
-                              String? key;
-                              await database
-                                  .child('favourites')
-                                  .orderByChild('name')
-                                  .equalTo(widget.selectedBook.name)
-                                  .onChildAdded
-                                  .listen((event) {
-                                setState(() {
-                                  key = event.snapshot.key.toString();
-                                });
-                              }, onError: (Object o) {
-                                print(o.toString());
-                              });
-                              try {
-                                favRef
-                                    .orderByChild('name')
-                                    .equalTo(widget.selectedBook.name)
-                                    .once()
-                                    .then((value) => {
-                                  if (value.snapshot.exists)
-                                    {
-                                      database
-                                          .child('favourites')
-                                          .child(key!)
-                                          .remove(),
-                                      setState(() {
-                                        widget.selectedBook.fave =
-                                        false;
-                                      }),
-                                    }
-                                  else
-                                    {
-                                      database
-                                          .child('favourites')
-                                          .push()
-                                          .set(nextRef),
-                                      setState(() {
-                                        widget.selectedBook.fave = true;
-                                      }),
-                                    }
-                                });
-                              } catch (e) {
-                                print(e.toString());
-                              }
-                            } catch (e) {
-                              print(e.toString());
-                            }
-                          },
-                          icon: ImageIcon(
-                            widget.selectedBook.fave
-                                ? const AssetImage("images/favicon.png")
-                                : const AssetImage("images/notfav_icon.png"),
-                            color: Colors.black,
-                          ),
-                        ),
-                    )
+                      padding: EdgeInsets.only(left: 20,right: 20),
+                    child:Text(
+                      ' ₪ ${widget.selectedBook.price}',
+                      style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 25,
+                          color: Color(0xffFA4A0C)),
+                    ),
+                    ),
                   ],
                 ),
               )

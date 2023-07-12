@@ -19,18 +19,30 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   void initState() {
     super.initState();
     dbRef = FirebaseDatabase.instance.ref().child('Users');
-    getStudentData();
+    Contactt_data();
   }
 
-  void getStudentData() async {
+  // void getStudentData() async {
+  //   DataSnapshot snapshot = await dbRef.child(widget.studentKey).get();
+  //
+  //   Map student = snapshot.value as Map;
+  //
+  //   userNameController.text = student['name'];
+  //   userAgeController.text = student['email'];
+  //   userSalaryController.text = student['password'];
+  //
+  // }
+
+  void Contactt_data() async {
     DataSnapshot snapshot = await dbRef.child(widget.studentKey).get();
 
-    Map student = snapshot.value as Map;
+    Map Contact = snapshot.value as Map;
 
-    userNameController.text = student['name'];
-    userAgeController.text = student['email'];
-    userSalaryController.text = student['password'];
-
+    setState(() {
+      userNameController.text = Contact['name'];
+      userAgeController.text = Contact['email'];
+      userSalaryController.text = Contact['password'];
+    });
   }
 
   @override
@@ -72,7 +84,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                 ),
                 TextField(
                   controller: userAgeController,
-                  keyboardType: TextInputType.number,
+                  keyboardType: TextInputType.text,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'email',

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../widgtes/onboarding_content.dart';
-import '../widgtes/size_confg.dart';
+import '../widgtes/size_config.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({Key? key}) : super(key: key);
@@ -40,8 +40,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    double width = SizeConfig.screenW!;
-    double height = SizeConfig.screenH!;
+    double width = SizeConfig.screenWidth!;
+    double height = SizeConfig.screenHeight!;
 
     return Scaffold(
       backgroundColor: Colors.white,

@@ -1,7 +1,7 @@
-import 'package:booklibrary/Screens/DetailsScreen.dart';
+import 'package:booklibrary/Screens/Books/DetailsBookScreen.dart';
 import 'package:flutter/material.dart';
 
-import '../models/bokdemo.dart';
+import '../../models/Books.dart';
 
 class BooksScreenCategory extends StatefulWidget {
   final String idCategory;
@@ -49,7 +49,7 @@ class _BooksScreenCategoryState extends State<BooksScreenCategory> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => DetailsPage(selectedBook: _books[index]),
+                    builder: (context) => Detailsf(selectedBook: _books[index]),
                   ),
                 );
               },

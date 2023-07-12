@@ -3,8 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-
-import '../Screens/OtpPhoneScreen.dart';
 class Phones extends StatefulWidget {
   @override
   _PhonesState createState() => _PhonesState();
@@ -32,8 +30,8 @@ class _PhonesState extends State<Phones> {
           verificationId: verificationId,
           smsCode: smsCode,
         );
-        Get.to(OtpPage(), arguments: [verificationId]);
-        await auth.signInWithCredential(credential);
+        // Get.to(OtpPage(), arguments: [verificationId]);
+        // await auth.signInWithCredential(credential);
         // authentication successful, do something
       },
       codeAutoRetrievalTimeout: (String verificationId) {},
