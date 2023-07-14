@@ -182,7 +182,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   topLeft: Radius.circular(50.r),
                   topRight: Radius.circular(50.r),
                 ),
-                color: Color(0xFFEFDFCF),
+                color: Colors.grey[200],
               ),
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.w),

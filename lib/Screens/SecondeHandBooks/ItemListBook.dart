@@ -31,13 +31,13 @@ class _ItemListState extends State<ItemList> {
   @override
   Widget build(BuildContext context) {
     DatabaseReference db_Ref =
-    FirebaseDatabase.instance.ref().child('Book_user');
+    FirebaseDatabase.instance.ref().child('Second_HandBook');
     print(db_Ref);
     // if(action  == ){
     //
     // }
     return Scaffold(
-
+backgroundColor: Colors.white,
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.brown[400],
         onPressed: () {
@@ -80,31 +80,35 @@ class _ItemListState extends State<ItemList> {
                       builder: (context) => DetailsBookUser(selectedBook: _books[index]),
                     ),
                   );
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (context) => DetailsPage(selectedBook: _books[index]),
-                  //   ),
-                  // );
                 },
-                child: Card(
-                  elevation: 5,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.r),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child:  ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
-                          child: Image.network(_books[index].image,width: 150,),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Card(
+                    color: Colors.grey[200],
+                    elevation: 5,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.r),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child:  ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Image.network(_books[index].image,width: 150,),
+                          ),
                         ),
-                      ),
-                      Text(_books[index].name,textAlign: TextAlign.center,),
-                      Text(_books[index].auther),
-                      SizedBox(height: 10.h),
-                    ],
+                        Text(_books[index].name, textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 18)),
+                        Text(_books[index].auther,  style: TextStyle(
+              fontWeight: FontWeight.w600,
+              color: Color(0xFFBCAAA4),
+              fontSize: 18)),
+                        SizedBox(height: 10.h),
+                      ],
+                    ),
                   ),
                 ),
               );

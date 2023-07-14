@@ -144,23 +144,23 @@ class _CartState extends State<Cart> {
               ),
             ),
           ),
-          Text(
-            'المجموع: ${cartBook!.calculateCartTotal().then((result) {
-              double totalPrice = result['totalPrice'];
-              int totalQuantity = result['totalQuantity'];
-
-              // Do something with the calculated values
-              print('Total Price: \$${totalPrice.toStringAsFixed(2)}');
-              print('Total Quantity: $totalQuantity');
-            }).catchError((error) {
-              // Handle any errors that occur during the calculation
-              print('Error calculating cart total: $error');
-            })}',
-            style: TextStyle(
-                fontWeight: FontWeight.w500,
-                fontSize: 15,
-                color: Color(0xffFA4A0C)),
-          ),
+          // Text(
+          //   'المجموع: ${cartBook!.calculateCartTotal().then((result) {
+          //     double totalPrice = result['totalPrice'];
+          //     int totalQuantity = result['totalQuantity'];
+          //
+          //     // Do something with the calculated values
+          //     print('Total Price: \$${totalPrice.toStringAsFixed(2)}');
+          //     print('Total Quantity: $totalQuantity');
+          //   }).catchError((error) {
+          //     // Handle any errors that occur during the calculation
+          //     print('Error calculating cart total: $error');
+          //   })}',
+          //   style: TextStyle(
+          //       fontWeight: FontWeight.w500,
+          //       fontSize: 15,
+          //       color: Color(0xffFA4A0C)),
+          // ),
           TextButton(
             onPressed: () {
               Navigator.push(
@@ -268,7 +268,7 @@ class _CartState extends State<Cart> {
     height: 25,
     width: 60,
     decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(25), color: Color(0xffFA4A0C)),
+        borderRadius: BorderRadius.circular(25), color: Color(0xfff3dbce)),
     child: Stack(
       children: [
         Positioned(

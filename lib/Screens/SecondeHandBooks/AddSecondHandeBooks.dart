@@ -28,7 +28,7 @@ class _AddItemState extends State<AddItem> with Helpers{
   String dialCodeInitial = '+970';
   String result = '';
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-  DatabaseReference dbRef = FirebaseDatabase.instance.ref().child('Book_user');
+  DatabaseReference dbRef = FirebaseDatabase.instance.ref().child('Second_HandBook');
   File? file;
   ImagePicker image = ImagePicker();
   var url;

@@ -2,10 +2,12 @@ import 'package:booklibrary/Screens/Books/DetailsBookScreen.dart';
 import 'package:booklibrary/models/Books.dart';
 import 'package:booklibrary/models/Cart.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../models/Category.dart';
 import 'BookCategory.dart';
+import 'DetailsCategoryScreen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -18,6 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Bookhome> _books = [];
 
   List<Categ> _categories = [];
+  String name = '';
   final _categoriesService = CategService();
   @override
   final _bookService = BookService();
@@ -45,9 +48,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-
-
-
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -55,38 +55,38 @@ class _HomeScreenState extends State<HomeScreen> {
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       //drawer: CustomDrawer(),
-      appBar: AppBar(
-        titleSpacing: 0.0,
-        backgroundColor: Color(0xffF2F2F2),
-        elevation: 0.0,
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 20.0),
-          child: IconButton(
-              color: Colors.black,
-              icon: Icon(Icons.access_alarm),
-              onPressed: () => scaffoldkey.currentState?.openDrawer()), //
-        ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 20.0),
-            child: IconButton(
-              onPressed: () {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => BookCategory()));
-              },
-              icon: Image(
-                image: AssetImage("images/shopping-cart.png"),
-              ),
-            ),
-          ),
-        ],
-      ),
+      // appBar: AppBar(
+      //   titleSpacing: 0.0,
+      //   backgroundColor: Color(0xffffffff),
+      //   elevation: 0.0,
+      //   leading: Padding(
+      //     padding: const EdgeInsets.only(left: 20.0),
+      //     child: IconButton(
+      //         color: Colors.black,
+      //         icon: Icon(Icons.access_alarm),
+      //         onPressed: () => scaffoldkey.currentState?.openDrawer()), //
+      //   ),
+      //   actions: [
+      //     Padding(
+      //       padding: const EdgeInsets.only(right: 20.0 , left: 20.0),
+      //       child: IconButton(
+      //         onPressed: () {
+      //           Navigator.push(
+      //               context, MaterialPageRoute(builder: (context) => BookCategory()));
+      //         },
+      //         icon: Image(
+      //           image: AssetImage("images/shopping-cart.png"),
+      //         ),
+      //       ),
+      //     ),
+      //   ],
+      // ),
       body: Container(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.only(left: 30.0, right: 30.0, top: 10),
+              padding: const EdgeInsets.only(left: 30.0, right: 30.0, top: 50),
               child: SizedBox(
                 width: 200,
                 child: Text(
@@ -124,18 +124,20 @@ class _HomeScreenState extends State<HomeScreen> {
                       borderRadius: BorderRadius.circular(25.7),
                     ),
                   ),
+                  onChanged: (value){
+                    setState(() {
+                      name = value;
+                    });
+
+                  },
                 ),
               ),
             ),
-SizedBox(
-  height: 10,
-),
-      Expanded(
-        flex: 20,
+
+/*      Expanded(
         child: Column(
           children: [
             Expanded(
-              flex: 5,
               child: CarouselSlider(
                 options: CarouselOptions(
                   enlargeCenterPage: true,
@@ -150,8 +152,8 @@ SizedBox(
                 items: [
                   Padding(
                     padding: const EdgeInsets.symmetric(
-                      horizontal: 5.0,
-                      vertical: 20,
+                      horizontal: 2.0,
+                      vertical: 10,
                     ),
                     child: Image.asset("images/1.png"),
                   ),
@@ -172,65 +174,81 @@ SizedBox(
                 ],
               ),
             ),
-
+        ]
+      ),
+      ),*/
             Padding(
-              padding: const EdgeInsets.only(left: 30.0, right: 30.0, top: 10),
+              padding: const EdgeInsets.only(left: 30.0, right: 30.0,top: 10),
               child: SizedBox(
                 width: 200,
                 child: Text(
-                  "الكتب الجديدة  ",
+                  "الفئات",
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
                   textAlign: TextAlign.start,
                 ),
               ),
             ),
-        /*    Container(
-                height: 70,
-                //color: Colors.grey,
-                child : _categories != null
-                    ? ListView.builder(
-                  padding: const EdgeInsets.all(10.0),
-                  itemCount: _categories.length,
-                  // gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  //   crossAxisCount: 2,
-                  //   childAspectRatio: 0.9,
-                  // ),
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                BooksScreenCategory(
-                                    idCategory: _categories[index].id.toString()),
+           Padding(
+             padding: const EdgeInsets.only(left: 10,right: 10),
+             child: Container(
+                  height: 70,
+                  //color: Colors.grey,
+                  child : _categories != null
+                      ? ListView.builder(
+                    padding: const EdgeInsets.all(10.0),
+                    itemCount: _categories.length,
+                    // gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    //   crossAxisCount: 2,
+                    //   childAspectRatio: 0.9,
+                    // ),
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  BooksScreenCategory(
+                                      idCategory: _categories[index].id.toString()),
+                            ),
+                          );
+                        },
+                        child: Card(
+                          elevation: 4.0,
+                          shape: RoundedRectangleBorder(
+                              borderRadius:
+                              BorderRadius.circular(30.0)),
+                          child: Row(
+                            children: [
+                              Padding(padding: EdgeInsets.all(8),
+                             child: ClipRRect(
+                                borderRadius: BorderRadius.circular(50),
+                                child: Image.network(_categories[index].image),
+                              )),
+                              Container(
+
+                                child: Text(_categories[index].name,
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold
+                                ),
+                              ),
+                                margin: EdgeInsets.all(10),
+                                alignment: Alignment.center,
+                              ),
+
+                            ],
                           ),
-                        );
-                      },
-                      child: Card(
-                        elevation: 4.0,
-                        shape: RoundedRectangleBorder(
-                            borderRadius:
-                            BorderRadius.circular(30.0)),
-                        child: Container(child: Text(_categories[index].name,
-                          style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold
-                          ),
+                          color: Colors.grey[200],
                         ),
-                          width: 100,
-                          margin: EdgeInsets.all(10),
-                          alignment: Alignment.center,
-                        ),
-                        color: Colors.grey[200],
-                      ),
-                    );
-                  },
-                )
-                    : const Center(
-                  child: CircularProgressIndicator(),
-                )),*/
+                      );
+                    },
+                  )
+                      : const Center(
+                    child: CircularProgressIndicator(),
+                  )),
+           ),
             //Code عرض الكاتيجوري
 
 /*     Container(
@@ -289,7 +307,19 @@ SizedBox(
                 alignment: Alignment.bottomCenter,
               ),
             ),
-            Expanded(
+            Padding(
+              padding: const EdgeInsets.only(left: 30.0, right: 30.0,top: 10,bottom: 10),
+              child: SizedBox(
+                width: 200,
+                child: Text(
+                  "الأكثر شهرة ",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+                  textAlign: TextAlign.start,
+                ),
+              ),
+            ),
+
+           Expanded(
               child: Column(
                 children: [
                   Padding(
@@ -327,8 +357,8 @@ SizedBox(
                                         height: 20,
                                       ),
                                      ClipRRect(
-                                          borderRadius: BorderRadius.circular(30),
-                                          child: Image.network(_books[index].imageUrl),
+                                          borderRadius: BorderRadius.circular(10),
+                                          child: Image.network(_books[index].imageUrl , width: 200, height: 100,),
                                         ),
                                       Padding(padding: EdgeInsets.symmetric(vertical: 8.0,horizontal: 8.0),
                                         child: Column(
@@ -450,13 +480,11 @@ SizedBox(
                 ],
               ),
             ),
-          ],
-        ),
-      ),
       ],
           ),
       ),
     );
+
   }
 }
 // return _books != null

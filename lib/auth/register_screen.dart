@@ -6,10 +6,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../models/Helpers.dart';
 import '../Firebase/fb_cotroller_auth.dart';
-import '../models/User.dart';
 import '../widgtes/app_button.dart';
 import '../widgtes/app_text_field.dart';
-import 'firebase_auth_helper.dart';
+import 'PhoneAuth.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -51,7 +50,7 @@ class _RegisterScreenState extends State<RegisterScreen> with Helpers{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFEFDFCF),
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -86,13 +85,13 @@ class _RegisterScreenState extends State<RegisterScreen> with Helpers{
             ),
             Expanded(
               child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(50.r),
-                    topRight: Radius.circular(50.r),
-                  ),
-                ),
+                // decoration: BoxDecoration(
+                //   color: Colors.white,
+                //   borderRadius: BorderRadius.only(
+                //     topLeft: Radius.circular(50.r),
+                //     topRight: Radius.circular(50.r),
+                //   ),
+                // ),
                 child: ListView(
                   padding: EdgeInsets.symmetric(horizontal: 16.w),
                   children: [
@@ -180,15 +179,65 @@ class _RegisterScreenState extends State<RegisterScreen> with Helpers{
                       ),
                     ),
                     SizedBox(height: 30.h),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SvgPicture.asset('images/google.svg'),
-                        SizedBox(width: 40.w),
-                        // SvgPicture.asset('images/facebook.svg'),
-                        //   SizedBox(width: 10.w),
-                        SvgPicture.asset('images/call.svg'),
-                      ],
+                    Card(
+                      elevation: 10,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50.r),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SvgPicture.asset('images/google.svg'),
+                          SizedBox(width: 15.w , height: 10.h),
+                          TextButton(
+                            onPressed: () {
+                              /*  Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => LoginPage(),
+                                ),
+                              );*/
+                            },
+                            child: Text(
+                              'قم بتسجيل الدخول باستخدام جوجل',
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.poppins(
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.black,
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 25.h),
+                    Card(
+                      elevation: 10,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50.r),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SvgPicture.asset('images/call.svg'),
+                          SizedBox(width: 10.w),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).push(MaterialPageRoute(builder: (context) => Phones()));
+                            },
+                            child:Text(
+                              'قم بتسجيل الدخول باستخدام رقم الهاتف',
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.poppins(
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                     SizedBox(height: 20.h),
                     Row(

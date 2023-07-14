@@ -10,13 +10,13 @@ class Bookhome {
    String name;
   final String auther;
   final int price;
-  //final String timef;
+  final String timef;
   bool fave;
 
 
 
   Bookhome(this.id, this.book_category, this.book_count, this.description,
-      this.imageUrl, this.name, this.auther, this.price,this.fave);
+      this.imageUrl, this.name, this.auther, this.price, this.timef,this.fave);
   //Bookhome({required this.id, required this.name, required this.auther,required this.description,required this.price,required this.book_category,required this.book_count, required this.imageUrl});
 
 }
@@ -37,9 +37,9 @@ class BookService {
       final title = entry.value['name'];
       final author = entry.value['name_auther'];
       final price = entry.value['price'];
-    //  final timer2 = entry.value['time_del'];
+      final timer2 = entry.value['time_del'];
       final fave1 = false;
-      return Bookhome(id, book_caterg, book_count , description,image,title,author,price,fave1);
+      return Bookhome(id, book_caterg, book_count , description,image,title,author,price,timer2,fave1);
     }).toList();
 
     return books;

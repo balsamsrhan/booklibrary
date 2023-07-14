@@ -4,9 +4,10 @@ import 'package:firebase_database/firebase_database.dart';
 
 class Categ {
   final dynamic id;
+  final String image;
   final dynamic name;
 
-  Categ({required this.id, required this.name});
+  Categ({required this.id,required this.image,  required this.name});
 }
 
 class CategService {
@@ -25,10 +26,12 @@ class CategService {
         .map((data) {
       final id = data['id'];
       final name = data['name'];
+      final imageurl = data['image'];
 
       return Categ(
         id: id,
         name: name,
+        image: imageurl
       );
     }).toList();
 

@@ -42,86 +42,91 @@ class _MyBookUserState extends State<MyBookUser> {
   @override
   Widget build(BuildContext context) {
     DatabaseReference db_Ref =
-    FirebaseDatabase.instance.ref().child('Book_user');
+    FirebaseDatabase.instance.ref().child('Second_HandBook');
     return Scaffold(
-      appBar: AppBar(
-        title: IconButton(
-          // Your drawer Icon
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: Icon(
-            Icons.arrow_back_ios,
-            color: Colors.black,
-          ),
-        ),
-      ),
-      body: FirebaseAnimatedList(
-        query: db_Ref,
-        shrinkWrap: true,
-        itemBuilder: (context, snapshot, animation, index) {
-          Map Contact = snapshot.value as Map;
-          Contact['key'] = snapshot.key;
-          print("db_Ref.child('id_user'): ${Contact['id_user']}");
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            IconButton(
+                icon: Icon(Icons.arrow_forward_ios_outlined),
+                onPressed: () {
+                  Navigator.pop(context);
+                }),
+            Expanded(
+              child:
+            Container(
+              child: FirebaseAnimatedList(
+                query: db_Ref,
+                shrinkWrap: true,
+                itemBuilder: (context, snapshot, animation, index) {
+                  Map Contact = snapshot.value as Map;
+                  Contact['key'] = snapshot.key;
+                  print("db_Ref.child('id_user'): ${Contact['id_user']}");
 
-          return uuid == Contact['id_user']
-              ? GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => UpdateRecord(
-                    Contact_Key: Contact['key'],
-                  ),
-                ),
-              );
-              print(Contact['key']);
-            },
-            child: Container(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ListTile(
-                  shape: RoundedRectangleBorder(
-                    side: BorderSide(
-                      color: Colors.white,
-                    ),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  tileColor: Colors.grey[300],
-                  trailing: IconButton(
-                    icon: Icon(
-                      Icons.delete,
-                      color: Colors.red[900],
-                    ),
-                    onPressed: () {
-                      db_Ref.child(Contact['key']).remove();
+                  return uuid == Contact['id_user']
+                      ? GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => UpdateRecord(
+                            Contact_Key: Contact['key'],
+                          ),
+                        ),
+                      );
+                      print(Contact['key']);
                     },
-                  ),
-                  leading: CircleAvatar(
-                    backgroundImage: NetworkImage(
-                      Contact['url'],
+                    child: Container(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ListTile(
+                          shape: RoundedRectangleBorder(
+                            side: BorderSide(
+                              color: Colors.white,
+                            ),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          tileColor: Colors.grey[300],
+                          trailing: IconButton(
+                            icon: Icon(
+                              Icons.delete,
+                              color: Colors.red[900],
+                            ),
+                            onPressed: () {
+                              db_Ref.child(Contact['key']).remove();
+                            },
+                          ),
+                          leading: CircleAvatar(
+                            backgroundImage: NetworkImage(
+                              Contact['url'],
+                            ),
+                          ),
+                          title: Text(
+                            Contact['name'],
+                            style: TextStyle(
+                              fontSize: 25,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          subtitle: Text(
+                            Contact['auther'],
+                            style: TextStyle(
+                              fontSize: 25,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
-                  title: Text(
-                    Contact['name'],
-                    style: TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  subtitle: Text(
-                    Contact['auther'],
-                    style: TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
+                  )
+                      : const SizedBox();
+                },
               ),
             ),
-          )
-              : const SizedBox();
-        },
+            )
+          ],
+        ),
       ),
     );
   }
