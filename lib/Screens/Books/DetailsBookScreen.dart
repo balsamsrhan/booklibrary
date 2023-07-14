@@ -3,7 +3,8 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
-import '../../models/Books.dart';
+import '../../Models/Books.dart';
+
 class Detailsf extends StatefulWidget {
   Bookhome selectedBook;
   late String uuid;

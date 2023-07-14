@@ -9,8 +9,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import '../../auth/firebase_auth_helper.dart';
-import '../../models/Helpers.dart';
-import '../../models/Seconde_HandBooks.dart';
+import '../../Models/Helpers.dart';
+import '../../Models/Seconde_HandBooks.dart';
 import 'ItemListBook.dart';
 
 class AddItem extends StatefulWidget {

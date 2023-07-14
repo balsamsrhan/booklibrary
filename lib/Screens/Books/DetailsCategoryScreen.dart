@@ -1,7 +1,7 @@
 import 'package:booklibrary/Screens/Books/DetailsBookScreen.dart';
 import 'package:flutter/material.dart';
 
-import '../../models/Books.dart';
+import '../../Models/Books.dart';
 
 class BooksScreenCategory extends StatefulWidget {
   final String idCategory;

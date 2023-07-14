@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../models/Helpers.dart';
+import '../Models/Helpers.dart';
 
 class FBAuthController with Helpers{
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;

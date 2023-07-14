@@ -1,10 +1,10 @@
 import 'package:booklibrary/Screens/Books/FavouritBook.dart';
 import 'package:booklibrary/Screens/Books/Order_Screen.dart';
-import 'package:booklibrary/Screens/profile/profile_screen.dart';
+import 'package:booklibrary/Screens/Profile/profile_screen.dart';
 import 'package:flashy_tab_bar2/flashy_tab_bar2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../models/bn_screen.dart';
+import '../Models/bn_screen.dart';
 import 'Books/Home_Page.dart';
 import 'SecondeHandBooks/ItemListBook.dart';
 

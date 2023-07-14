@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import '../../../Shared_Pref/Shard_Pref_Controller.dart';
 import '../../../auth/login_screen.dart';
 import '../../Profile/AddressScreen.dart';
 import '../MyBookUser.dart';
@@ -10,6 +12,11 @@ import 'profile_pic.dart';
 class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
+    //TODO: here must add the object key of user to update it
+    DatabaseReference dbRef = FirebaseDatabase.instance.ref();
+    print(
+        "test: ${dbRef.key}");
     return SingleChildScrollView(
       padding: EdgeInsets.symmetric(vertical: 20),
       child: Column(
@@ -20,17 +27,19 @@ class Body extends StatelessWidget {
             text: "تحديث بياناتي",
             icon: "images/User Icon.svg",
             press: () => {
-            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context){
-            return  UpdateProfileScreen(studentKey: 'id');
-            }))
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) {
+                return UpdateProfileScreen(studentKey: '${dbRef.key}');
+              }))
             },
           ),
           ProfileMenu(
             text: "العنوان",
             icon: "images/Location point.svg",
             press: () {
-              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context){
-                return  MyAdress();
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) {
+                return MyAdress();
               }));
             },
           ),
@@ -38,8 +47,9 @@ class Body extends StatelessWidget {
             text: "كتبي",
             icon: "images/book.svg",
             press: () {
-              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context){
-                return  MyBookUser();
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) {
+                return MyBookUser();
               }));
             },
           ),
@@ -47,9 +57,10 @@ class Body extends StatelessWidget {
             text: "تسجيل خروج",
             icon: "images/log out.svg",
             press: () {
-              FirebaseAuth.instance.signOut().then((value){
-                Navigator.push(context,MaterialPageRoute(builder: (context){
-                  return  LoginScreen();
+              FirebaseAuth.instance.signOut().then((value) {
+                SharedPrefController().removeUserID('user_id');
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return LoginScreen();
                 }));
               });
             },

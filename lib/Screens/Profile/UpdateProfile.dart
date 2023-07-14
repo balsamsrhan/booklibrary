@@ -1,6 +1,8 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
+import '../../Shared_Pref/Shard_Pref_Controller.dart';
+
 class UpdateProfileScreen extends StatefulWidget {
   const UpdateProfileScreen({Key? key,   required this.studentKey,}) : super(key: key);
   final  String studentKey;
@@ -110,6 +112,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                   onPressed: () {
 
                     Map<String, String> students = {
+                      'id' : SharedPrefController().getUserID()!,
                       'name': userNameController.text,
                       'email': userAgeController.text,
                       'password': userSalaryController.text
@@ -117,7 +120,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
 
                     dbRef.child(widget.studentKey).update(students)
                         .then((value) => {
-                      Navigator.pop(context)
+                      // Navigator.pop(context)
                     });
 
                   },

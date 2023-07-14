@@ -1,3 +1,4 @@
+import 'package:booklibrary/Shared_Pref/Shard_Pref_Controller.dart';
 import 'package:flutter/material.dart';
 import '../widgtes/onboarding_content.dart';
 import '../widgtes/size_config.dart';
@@ -15,6 +16,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   void initState() {
     _controller = PageController();
+
+    //Check if uid is exists or not
+    if(SharedPrefController().getUserID() != null){
+      Navigator.pushReplacementNamed(context, '/bn_screen');
+    }
     super.initState();
   }
 

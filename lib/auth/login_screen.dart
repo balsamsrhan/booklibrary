@@ -1,6 +1,10 @@
+import 'dart:async';
+import 'dart:developer';
+
 import 'package:booklibrary/auth/PhoneAuth.dart';
-import 'package:booklibrary/models/Helpers.dart';
+import 'package:booklibrary/Models/Helpers.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -32,8 +36,23 @@ class _LoginScreenState extends State<LoginScreen> with Helpers {
 
   Future<void> createPrefs() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.remove('user_id');
+   // prefs.remove('user_id');
     await prefs.setString('user_id', _firebaseAuth.currentUser!.uid);
+    log(_firebaseAuth.currentUser.toString()); 
+
+    // FirebaseDatabase.instance
+    //     .ref('Users')
+    //     .equalTo(_firebaseAuth.currentUser!.uid)
+    //     .get()
+    //     .then((snapshot) {
+    //   if (snapshot.exists) {
+    //     Map<dynamic, dynamic> values = snapshot.value;
+    //     values.forEach((key, value) {
+    //       print(key);
+    //     });
+    //   }
+    // });
+
     print("login: ${prefs.getString('user_id')}");
   }
 
@@ -43,6 +62,7 @@ class _LoginScreenState extends State<LoginScreen> with Helpers {
     _passwordController.dispose();
     super.dispose();
   }
+
   final _formKey = GlobalKey<FormState>();
   String? email;
   String? password;
@@ -63,6 +83,7 @@ class _LoginScreenState extends State<LoginScreen> with Helpers {
         errors.remove(error);
       });
   }
+
   bool obscure = true;
 
   @override
@@ -112,38 +133,35 @@ class _LoginScreenState extends State<LoginScreen> with Helpers {
                   padding: EdgeInsets.symmetric(horizontal: 16.w),
                   children: [
                     SizedBox(height: 40.h),
-                AppTextField(
+                    AppTextField(
+                      //  focusColor: Colors.white,
+                      //add prefix icon
+                      prefixIcon: Icon(
+                        Icons.person_outline_rounded,
+                        color: Colors.grey,
+                      ),
 
-                //  focusColor: Colors.white,
-                    //add prefix icon
-                    prefixIcon: Icon(
-                      Icons.person_outline_rounded,
-                      color: Colors.grey,
+                      hintText: "البريد الالكتروني",
+
+                      //make hint text
+                      // hintStyle: TextStyle(
+                      //   color: Colors.grey,
+                      //   fontSize: 16,
+                      //   fontFamily: "verdana_regular",
+                      //   fontWeight: FontWeight.w400,
+                      // ),
+                      keyboardType: TextInputType.emailAddress,
+                      textEditingController: _emailController,
+                      //create lable
+                      labelText: 'البريد الالكتروني',
+                      //lable style
+                      // labelStyle: TextStyle(
+                      //   color: Colors.grey,
+                      //   fontSize: 16,
+                      //   fontFamily: "verdana_regular",
+                      //   fontWeight: FontWeight.w400,
+                      // ),
                     ),
-
-
-                    hintText: "البريد الالكتروني",
-
-                    //make hint text
-                    // hintStyle: TextStyle(
-                    //   color: Colors.grey,
-                    //   fontSize: 16,
-                    //   fontFamily: "verdana_regular",
-                    //   fontWeight: FontWeight.w400,
-                    // ),
-                  keyboardType: TextInputType.emailAddress,
-                  textEditingController: _emailController,
-                    //create lable
-                    labelText: 'البريد الالكتروني',
-                    //lable style
-                    // labelStyle: TextStyle(
-                    //   color: Colors.grey,
-                    //   fontSize: 16,
-                    //   fontFamily: "verdana_regular",
-                    //   fontWeight: FontWeight.w400,
-                    // ),
-                  ),
-
                     SizedBox(height: 20.h),
                     AppTextField(
                       prefixIcon: Padding(
@@ -194,10 +212,10 @@ class _LoginScreenState extends State<LoginScreen> with Helpers {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           SvgPicture.asset('images/google.svg'),
-                          SizedBox(width: 15.w , height: 10.h),
+                          SizedBox(width: 15.w, height: 10.h),
                           TextButton(
                             onPressed: () {
-                            /*  Navigator.push(
+                              /*  Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (_) => LoginPage(),
@@ -230,17 +248,18 @@ class _LoginScreenState extends State<LoginScreen> with Helpers {
                           SizedBox(width: 10.w),
                           TextButton(
                             onPressed: () {
-                             Navigator.of(context).push(MaterialPageRoute(builder: (context) => Phones()));
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => Phones()));
                             },
-                            child:Text(
-                            'قم بتسجيل الدخول باستخدام رقم الهاتف',
-                            textAlign: TextAlign.center,
-                            style: GoogleFonts.poppins(
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.black,
+                            child: Text(
+                              'قم بتسجيل الدخول باستخدام رقم الهاتف',
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.poppins(
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.black,
+                              ),
                             ),
-                          ),
                           ),
                         ],
                       ),

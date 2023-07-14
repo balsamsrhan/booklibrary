@@ -1,5 +1,5 @@
 
-import 'package:booklibrary/models/category.dart';
+import 'package:booklibrary/Models/Category.dart';
 import 'package:flutter/material.dart';
 
 import 'DetailsCategoryScreen.dart';

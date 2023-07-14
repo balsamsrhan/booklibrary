@@ -31,4 +31,9 @@ class SharedPrefController {
   String? getUserID() {
     return _sharedPreferences.getString('user_id');
   }
+
+  Future<bool> removeUserID(String usedId) async {
+    return await _sharedPreferences.remove(
+        'user_id');
+  }
 }
